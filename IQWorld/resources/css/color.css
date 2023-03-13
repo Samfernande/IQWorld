@@ -1,0 +1,39 @@
+.colorDark {
+    color: #484349;
+}
+
+.colorLight {
+    color: #DFE0E2;
+}
+
+.colorBlue {
+    color: #4F86C6;
+}
+
+.colorRed {
+    color: #DB4C40;
+}
+
+.colorPurple {
+    color: #C47AC0;
+}
+
+.backgroundDark {
+    background-color: #484349;
+}
+
+.backgroundLight {
+    background-color: #DFE0E2;
+}
+
+.backgroundBlue {
+    background-color: #4F86C6;
+}
+
+.backgroundRed {
+    background-color: #DB4C40;
+}
+
+.backgroundPurple {
+    background-color: #C47AC0;
+}
