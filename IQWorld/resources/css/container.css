@@ -3,3 +3,19 @@
     align-items: center;
     flex-direction: column;
 }
+
+.containerAlignMiddle {
+    display: flex;
+    align-items: center;
+}
+
+.containerSpaceBetween {
+    display: flex;
+    justify-content: space-between;
+}
+
+.containerSpaceAround {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}

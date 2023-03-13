@@ -6,6 +6,10 @@
     color: #DFE0E2;
 }
 
+.colorWhite {
+    color: white;
+}
+
 .colorBlue {
     color: #4F86C6;
 }
@@ -36,4 +40,22 @@
 
 .backgroundPurple {
     background-color: #C47AC0;
+}
+
+.backgroundLogique {
+    background: linear-gradient(45deg, #23CE6B, green);
+}
+
+.backgroundMémoire {
+    background: linear-gradient(45deg, #5995ED, blue);
+
+}
+
+.backgroundRéflexe {
+    background: linear-gradient(45deg, #FE7F2D, rgb(199, 110, 0));
+
+}
+
+.backgroundConcentration {
+    background: linear-gradient(45deg, #EB4511, darkred);
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : dim. 12 mars 2023 à 22:43
+-- Généré le : lun. 13 mars 2023 à 22:29
 -- Version du serveur : 8.0.30
 -- Version de PHP : 8.0.19
 
@@ -24,6 +24,30 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `category_games`
+--
+
+CREATE TABLE `category_games` (
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `category_games`
+--
+
+INSERT INTO `category_games` (`id`, `name`, `description`, `created_at`, `updated_at`) VALUES
+(2, 'Réflexe', 'Les jeux de réflexes sont des jeux qui mettent à l’épreuve votre capacité à réagir rapidement et précisément à des stimuli visuels ou sonores. Ils sollicitent votre coordination motrice, votre attention et votre concentration. Ces jeux sont adaptés à tous les âges et peuvent vous aider à améliorer vos performances cognitives et votre vivacité d’esprit.', NULL, NULL),
+(3, 'Mémoire', 'Les jeux de mémoire sont des jeux qui stimulent votre capacité à retenir et à rappeler des informations visuelles ou auditives. Ils sollicitent votre concentration, votre attention et votre créativité. Ces jeux sont bénéfiques pour votre santé cérébrale et peuvent vous aider à prévenir le déclin cognitif lié à l’âge.', NULL, NULL),
+(4, 'Concentration', 'Les jeux de concentration sont des jeux qui vous aident à focaliser votre attention sur un ou plusieurs stimuli objectifs. Ils sollicitent votre capacité à planifier, à organiser et à atteindre vos objectifs. Ces jeux sont utiles pour améliorer votre efficacité et votre performance dans les tâches quotidiennes qui demandent de l’attention. Ils sont adaptés à tous les âges et peuvent vous faire découvrir de nouveaux défis.', NULL, NULL),
+(5, 'Logique', 'Les jeux de logique sont des jeux qui vous apprennent à utiliser le raisonnement, la déduction et la cohérence. Ils sollicitent votre capacité à interpréter des symboles, à résoudre des énigmes et à élaborer des stratégies. Ces jeux sont bénéfiques pour votre intelligence et votre esprit critique. Ils sont adaptés à tous les âges et peuvent vous faire découvrir de nouveaux modes de pensée.', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `failed_jobs`
 --
 
@@ -35,6 +59,46 @@ CREATE TABLE `failed_jobs` (
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `games`
+--
+
+CREATE TABLE `games` (
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_id` bigint UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `games`
+--
+
+INSERT INTO `games` (`id`, `name`, `description`, `category_id`, `created_at`, `updated_at`) VALUES
+(2, 'Speed\'Calcul', 'Speed\'Calcul est un jeu de calcul mental rapide et nerveux mettant au défi vos capacités logiques en les mettant sous pression.\r\n\r\nLe but de ce jeu est de répondre au plus vite à des calculs simples.', 5, '2023-03-10 23:27:36', NULL),
+(3, 'Rabbit Dance', 'Rabbit Dance est un jeu qui a pour but d\'améliorer votre capacité à vous concentrer sur plusieurs tâches en même temps.\r\n\r\nLe but de ce jeu est de compter le nombre de lapins de différentes couleur se promenant sur l\'écran.', 4, '2023-03-11 23:27:36', NULL),
+(4, 'AttenTouch', 'AttenTouch est un jeu de visant à améliorer vos réflexes.\r\n\r\nLe but de d\'AttenTouch est de taper l\'écran au bon moment, sans se faire perturber par les différents évènements.', 2, '2023-03-12 23:27:36', NULL),
+(5, 'Memories', 'Memories est un jeu de visant à améliorer votre mémoire à court terme.\r\n\r\nLe but de ce jeu est de trouver les bonnes images parmi celles présentées.', 3, '2023-03-13 23:27:36', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `joueurs_points`
+--
+
+CREATE TABLE `joueurs_points` (
+  `id` bigint UNSIGNED NOT NULL,
+  `points` int NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `game_id` bigint UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -59,7 +123,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (3, '2019_08_19_000000_create_failed_jobs_table', 1),
 (4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
 (5, '2023_03_12_140029_create_model_messages_table', 1),
-(6, '2023_03_12_140034_create_model_likes_table', 1);
+(6, '2023_03_12_140034_create_model_likes_table', 1),
+(7, '2023_03_13_070844_create_category_games_table', 1),
+(8, '2023_03_13_071605_create_games_table', 1),
+(9, '2023_03_13_072704_create_joueurs_points_table', 1);
 
 -- --------------------------------------------------------
 
@@ -129,10 +196,6 @@ CREATE TABLE `personal_access_tokens` (
 CREATE TABLE `users` (
   `id` bigint UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `memoryPoints` int DEFAULT NULL,
-  `attentionPoints` int DEFAULT NULL,
-  `reflexePoints` int DEFAULT NULL,
-  `logicPoints` int DEFAULT NULL,
   `imgPath` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
@@ -144,15 +207,14 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Déchargement des données de la table `users`
---
-
-INSERT INTO `users` (`id`, `name`, `memoryPoints`, `attentionPoints`, `reflexePoints`, `logicPoints`, `imgPath`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`) VALUES
-(2, 'Admin', NULL, NULL, NULL, NULL, NULL, 'Admin@admin.com', NULL, '$2y$10$f8PTXPECBLeDPOauuS/2DOhXb/Ts1CvINj76wccWeJy18Sj0IoMIS', NULL, '2023-03-12 14:29:48', '2023-03-12 14:29:48', NULL);
-
---
 -- Index pour les tables déchargées
 --
+
+--
+-- Index pour la table `category_games`
+--
+ALTER TABLE `category_games`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `failed_jobs`
@@ -160,6 +222,21 @@ INSERT INTO `users` (`id`, `name`, `memoryPoints`, `attentionPoints`, `reflexePo
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Index pour la table `games`
+--
+ALTER TABLE `games`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `games_category_id_foreign` (`category_id`);
+
+--
+-- Index pour la table `joueurs_points`
+--
+ALTER TABLE `joueurs_points`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `joueurs_points_user_id_foreign` (`user_id`),
+  ADD KEY `joueurs_points_game_id_foreign` (`game_id`);
 
 --
 -- Index pour la table `migrations`
@@ -209,16 +286,34 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT pour la table `category_games`
+--
+ALTER TABLE `category_games`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT pour la table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT pour la table `games`
+--
+ALTER TABLE `games`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT pour la table `joueurs_points`
+--
+ALTER TABLE `joueurs_points`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `model_likes`
@@ -242,11 +337,24 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Contraintes pour les tables déchargées
 --
+
+--
+-- Contraintes pour la table `games`
+--
+ALTER TABLE `games`
+  ADD CONSTRAINT `games_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `category_games` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `joueurs_points`
+--
+ALTER TABLE `joueurs_points`
+  ADD CONSTRAINT `joueurs_points_game_id_foreign` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `joueurs_points_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `model_likes`

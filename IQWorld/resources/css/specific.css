@@ -45,6 +45,34 @@ img {
     border-radius: 20px;
   }
 
+  .card {
+    /* Ajouter des ombres pour créer l'effet "carte" */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    /* Définir une largeur maximale */
+    max-width: 300px;
+    /* Ajouter une marge autour de la carte */
+    padding: 10px;
+    /* Ajouter une transition pour l'effet de survol */
+    transition: 0.3s;
+    /* Ajouter des coins arrondis */
+    border-radius: 10px;
+  }
+
+  .card:hover {
+    /* Augmenter l'opacité des ombres au survol */
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+     /* Augmenter la taille de la carte au survol */
+     transform: scale(1.1);
+     /* Ajouter un effet de rotation au survol */
+     transform: rotate(5deg);
+   }
+
+   .card-image {
+     /* Définir la largeur et la hauteur de l'image */
+     width: 20%;
+     height: 20%;
+   }
+
   /* Style pour les écrans étroits */
 @media screen and (max-width: 900px) {
     /* Style de la barre de navigation */

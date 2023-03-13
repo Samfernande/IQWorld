@@ -9,7 +9,9 @@ class ControllerHome extends Controller
 {
     public function index()
     {
-        $data = games::latest()->take(3)->get();
+        // Récupère les 3 derniers jeux avec la table categoryGame
+        $data = games::with('categoryGames')->latest()->take(3)->get();
+
         return view('pages/home')->with('data', $data);
     }
 }
