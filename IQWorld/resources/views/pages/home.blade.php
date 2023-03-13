@@ -14,8 +14,22 @@
     </div>
 
     <div class='backgroundLight littlePadding1'>
-    <hr>
+        <hr>
 
+        <h1 class='colorDark'>
+            Actualités
+        </h1>
+
+        <h1 class='colorDark'>
+            Derniers jeux ajoutés
+        </h1>
+
+            {{ $data }}
+        
+            @foreach ($data as $game)
+                <p>{{ $game['name'] }}</p>
+                <p>{{ $game['category_id'] }}</p>
+            @endforeach
     </div>
 
 @endsection
