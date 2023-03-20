@@ -28,7 +28,7 @@ class ControllerGamesTest extends TestCase
         $game->name = 'Test';
         $game->description = 'TEST';
         $game->category_id = 1;
-        $game->save();
+        $game->save();;
 
         // Appel de la route qui déclenche la méthode du bon contrôleur
         $response = $this->get("/game/{$game->id}");
