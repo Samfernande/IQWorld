@@ -1,0 +1,41 @@
+{
+  "resources/css/animation.css": {
+    "file": "assets/animation-e3b0c442.css",
+    "isEntry": true,
+    "src": "resources/css/animation.css"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-7024cbfa.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/css/color.css": {
+    "file": "assets/color-45837a13.css",
+    "isEntry": true,
+    "src": "resources/css/color.css"
+  },
+  "resources/css/container.css": {
+    "file": "assets/container-c821a160.css",
+    "isEntry": true,
+    "src": "resources/css/container.css"
+  },
+  "resources/css/specific.css": {
+    "file": "assets/specific-a9f22624.css",
+    "isEntry": true,
+    "src": "resources/css/specific.css"
+  },
+  "resources/css/style.css": {
+    "file": "assets/style-0541dea5.css",
+    "isEntry": true,
+    "src": "resources/css/style.css"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-9f9c98ef.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  },
+  "storage/app/public/static/backgroundIQWorld.png": {
+    "file": "assets/backgroundIQWorld-7dbf6cd5.png",
+    "src": "storage/app/public/static/backgroundIQWorld.png"
+  }
+}

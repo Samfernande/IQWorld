@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ControllerGames;
 use App\Http\Controllers\ControllerHome;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 // Routes
 
 Route::get('/', [ControllerHome::class, 'index'])->name('home');
+
+Route::get('/game/{id}', [ControllerGames::class, 'gameInfo'])->name('gameInfo');
 
 
 

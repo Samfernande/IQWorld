@@ -19,3 +19,16 @@
     justify-content: space-around;
     flex-wrap: wrap;
 }
+
+.containerSpaceEvenly {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.containerAlign {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}

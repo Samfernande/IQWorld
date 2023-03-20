@@ -49,7 +49,7 @@ img {
     /* Ajouter des ombres pour créer l'effet "carte" */
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     /* Définir une largeur maximale */
-    max-width: 300px;
+    max-width: 270px;
     /* Ajouter une marge autour de la carte */
     padding: 10px;
     /* Ajouter une transition pour l'effet de survol */
@@ -72,6 +72,19 @@ img {
      width: 20%;
      height: 20%;
    }
+  
+  .page {
+    border-radius: 10px;
+    padding:2%;
+    margin:2%;
+    max-width: 450px;
+    word-wrap: break-word;
+    max-height: 10%;
+  }
+  
+  .author {
+    text-align: right;
+  }
 
   /* Style pour les écrans étroits */
 @media screen and (max-width: 900px) {
@@ -102,5 +115,9 @@ img {
 
     img {
       width: 20%;
+    }
+
+    .page {
+      max-width: 300px;
     }
 }

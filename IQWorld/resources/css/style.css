@@ -4,6 +4,7 @@
 p, h1, h2, h3, a, label, span {
     font-family: 'Edu SA Beginner', cursive;
     font-family: 'Fredoka', sans-serif;
+    text-decoration: none;
     font-size: 200%;
 }
 
@@ -40,11 +41,11 @@ p, h1, h2, h3, a, label, span {
 }
 
 .smallText1 {
-    font-size: 150%;
+    font-size: 130%;
 }
 
 .smallText2 {
-    font-size: 120%;
+    font-size: 100%;
 }
 
 .textCenter {

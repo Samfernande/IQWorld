@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  db:
+    image: mysql:8.0.30
+    ports:
+      - 6044:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.2.0
+    ports:
+      - 8081:80
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
