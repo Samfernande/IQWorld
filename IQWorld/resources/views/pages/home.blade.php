@@ -1,5 +1,8 @@
 @extends('template')
 
+
+
+
 @section('content')
     <div class='containerMiddleColumn websiteBackground littlePadding1'>
         <h1 class='bigText2 colorLight'>
@@ -9,7 +12,7 @@
         <img src="{{ Storage::url('static/logo.png') }}">
 
         <p class='smallText1 colorLight textCenter'>
-            Quand l'entraînement cognitif devient une passion
+            @lang('text.welcome')
         </p>
     </div>
 
