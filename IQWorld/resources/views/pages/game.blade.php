@@ -45,6 +45,7 @@
 
     </div>
 
-    @vite('resources/js/games/speedcalcul.js')
+    @vite('resources/js/games/RabbitDance/rabbitDance.js')
+    
 
 @endsection

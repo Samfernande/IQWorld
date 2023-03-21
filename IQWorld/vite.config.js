@@ -14,7 +14,7 @@ export default defineConfig({
                 'resources/css/color.css',
                 // JS
                 'resources/js/app.js',
-                'resources/js/speedcalcul.js',
+                'resources/js/games/RabbitDance/rabbitDance.js',
             ],
             refresh: true,
         }),
