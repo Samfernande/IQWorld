@@ -17,20 +17,23 @@
     <header>
 
         <div class="navbar backgroundDark">
+
             <a href="{{ route('home') }}" class="backgroundBlue">IQWorld</a>
-            <a href="">Les jeux</a>
-            <a href="">Les classements</a>
+            <a href="">@lang("text.games")</a>
+            <a href="">@lang("text.leaderboards")</a>
             
           <!-- Ajouter un espace entre les liens à gauche et à droite -->
         <div style="flex-grow:1;"></div>
 
         @guest
-            <a href="{{ route('login') }}">Se connecter</a>
-            <a href="{{ route('register') }}">S'inscrire</a>
+            <a href="{{ route('login') }}">@lang("text.login")</a>
+            <a href="{{ route('register') }}">@lang("text.register")</a>
         @else
             <a href="">Profil</a>
             <a href="{{ url('logout') }}">Se déconnecter</a>
         @endguest
+        <a class='smallText2' href="{{ route('language.switch', ['lang' => 'fr']) }}">FR</a>
+        <a class='smallText2' href="{{ route('language.switch', ['lang' => 'en']) }}">EN</a>
           
         </div>
                 {{-- <div>

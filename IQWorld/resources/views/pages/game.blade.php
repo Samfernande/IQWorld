@@ -45,6 +45,6 @@
 
     </div>
 
-    @vite('resources/js/speedcalcul.js')
+    @vite('resources/js/games/speedcalcul.js')
 
 @endsection

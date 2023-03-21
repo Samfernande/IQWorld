@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\ControllerGames;
-use App\Http\Controllers\ControllerHome;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ControllerHome;
+use App\Http\Controllers\ControllerGames;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LanguageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +23,7 @@ Route::get('/', [ControllerHome::class, 'index'])->name('home');
 
 Route::get('/game/{id}', [ControllerGames::class, 'gameInfo'])->name('gameInfo');
 
-
-
+Route::get('/language/{lang}', [LanguageController::class, 'switchLang'])->name('language.switch');
 
 
 // TRUCS CHIANTS 

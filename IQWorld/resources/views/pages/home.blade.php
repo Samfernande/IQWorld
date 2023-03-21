@@ -21,7 +21,7 @@
         <hr>
 
         <h1 class='colorDark'>
-            Jeux du jour
+            @lang('text.gamesOfDay')
         </h1>
 
         <div class='containerAlign littleMargin1'>
@@ -48,7 +48,7 @@
         <hr>
 
         <h1 class='colorDark'>
-            Actualités
+            @lang('text.news')
         </h1>
 
         @foreach ($posts as $post)
@@ -68,7 +68,7 @@
         <hr>
 
         <h1 class='colorDark'>
-            Derniers jeux ajoutés
+            @lang('text.lastGames')
         </h1>
 
 

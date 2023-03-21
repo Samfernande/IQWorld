@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\games;
 use App\Models\posts;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class ControllerHome extends Controller
 {
@@ -40,10 +41,6 @@ class ControllerHome extends Controller
 
 
         array_push($gameOfDay, $games);
-
-
-
-
 
         return view('pages/home')->with('games', $games)->with('posts', $posts)->with('gameOfDay', $gameOfDay);
     }
