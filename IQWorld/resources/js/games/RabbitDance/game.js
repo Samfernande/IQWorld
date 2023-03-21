@@ -16,12 +16,12 @@ export class Game
     {
         for (var i = 0; i < this.rand(2, 6); i++)
         {
-            this.rabbitsLeft.push(new Rabbit("white", this.rand(0, 100), this.rand(0, 100), this.rand(0.5, 3), this.rand(0.5, 3), this.rand(40, 60)));
+            this.rabbitsLeft.push(new Rabbit("white", this.rand(0, 100), this.rand(0, 100), this.rand(2, 5), this.rand(2, 5), this.rand(100, 150)));
         }
 
         for (var i = 0; i < this.rand(2, 6); i++)
         {
-            this.rabbitsRight.push(new Rabbit("white", this.rand(canvas.width - 100, canvas.width), this.rand(canvas.height - 100, canvas.height), this.rand(-0.5, -3), this.rand(-0.5, -3), this.rand(40, 60)));
+            this.rabbitsRight.push(new Rabbit("white", this.rand(canvas.width - 100, canvas.width), this.rand(canvas.height - 100, canvas.height), this.rand(-2, -5), this.rand(-2, -5), this.rand(100, 150)));
           
         }
     }
