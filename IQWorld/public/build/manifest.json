@@ -20,7 +20,7 @@
     "src": "resources/css/container.css"
   },
   "resources/css/specific.css": {
-    "file": "assets/specific-d5dd415a.css",
+    "file": "assets/specific-88f2bea5.css",
     "isEntry": true,
     "src": "resources/css/specific.css"
   },
@@ -35,9 +35,14 @@
     "src": "resources/js/app.js"
   },
   "resources/js/games/RabbitDance/rabbitDance.js": {
-    "file": "assets/rabbitDance-e544eed6.js",
+    "file": "assets/rabbitDance-39a26018.js",
     "isEntry": true,
     "src": "resources/js/games/RabbitDance/rabbitDance.js"
+  },
+  "resources/js/games/launchGame.js": {
+    "file": "assets/launchGame-a6182913.js",
+    "isEntry": true,
+    "src": "resources/js/games/launchGame.js"
   },
   "storage/app/public/static/backgroundIQWorld.png": {
     "file": "assets/backgroundIQWorld-7dbf6cd5.png",

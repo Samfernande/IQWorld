@@ -14,15 +14,14 @@ export class Game
 
     createRabbits(canvas)
     {
-        for (var i = 0; i < this.rand(2, 6); i++)
+        for (var i = 0; i < this.rand(0, 3); i++)
         {
-            this.rabbitsLeft.push(new Rabbit("white", this.rand(0, 100), this.rand(0, 100), this.rand(2, 5), this.rand(2, 5), this.rand(100, 150)));
+            this.rabbitsLeft.push(new Rabbit(this.rand(0, 4), this.rand(0, 10), this.rand(0, 10), this.rand(1, 5), this.rand(1, 5), this.rand(100, 150)));
         }
 
-        for (var i = 0; i < this.rand(2, 6); i++)
+        for (var i = 0; i < this.rand(0, 3); i++)
         {
-            this.rabbitsRight.push(new Rabbit("white", this.rand(canvas.width - 100, canvas.width), this.rand(canvas.height - 100, canvas.height), this.rand(-2, -5), this.rand(-2, -5), this.rand(100, 150)));
-          
+            this.rabbitsRight.push(new Rabbit(this.rand(0, 4), this.rand(canvas.width - 10, canvas.width), this.rand(canvas.height - 10, canvas.height), this.rand(-1, -5), this.rand(-1, -5), this.rand(100, 150)));
         }
     }
 
@@ -31,11 +30,11 @@ export class Game
         ctx.clearRect(0, 0, canvas.width, canvas.height);
       
         this.rabbitsLeft.forEach(rabbit => {
-          rabbit.draw(ctx);
+          rabbit.draw(ctx, canvas);
         });
-      
+
         this.rabbitsRight.forEach(rabbit => {
-          rabbit.draw(ctx);
+          rabbit.draw(ctx, canvas);
         });
     }
 

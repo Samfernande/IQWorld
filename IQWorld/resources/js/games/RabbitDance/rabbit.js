@@ -2,23 +2,48 @@ export class Rabbit {
   
   constructor(color, posX, posY, speedX, speedY, size) {
   
-      this.color = color;
-      this.posX = posX;
-      this.posY = posY;
-      this.speedX = speedX;
-      this.speedY = speedY;
-      this.size = size;
-      this.img = new Image();
-      this.sprites = ['/storage/static/gamesImage/RabbitDance/rabbits/rabbit1.png',
-                      '/storage/static/gamesImage/RabbitDance/rabbits/rabbit2.png']
-  
-      this.img.src = "/storage/static/gamesImage/RabbitDance/rabbits/rabbit1.png";
+    this.color = color;
+    this.getColor(this.color);
+    this.posX = posX;
+    this.posY = posY;
+    this.speedX = speedX;
+    this.speedY = speedY;
+    this.size = size;
+    this.sprites = [new Image(), new Image()];
+    this.sprites[0].src = '/storage/static/gamesImage/RabbitDance/rabbits/rabbit1' + this.color + '.png';
+    this.sprites[1].src = '/storage/static/gamesImage/RabbitDance/rabbits/rabbit2' + this.color + '.png';
+    
+    this.img = this.sprites[0];
+
+    this.animation(((this.speedX + this.speedY) / 2) * 100, this.sprites);
+
+  }
+
+  getColor(color)
+  {
+    switch (color) {
+      case 0:
+        this.color = 'white'
+        break;
+      case 1:
+        this.color = 'blue'
+        break;
+      case 2:
+        this.color = 'red'
+        break;
+      case 3:
+        this.color = 'yellow'
+        break;
+      default:
+        this.color = 'white'
+          break;
+    }
   }
   
-  draw(ctx)
+  draw(ctx, canvas)
   {
-      this.animation(1000);
-      ctx.drawImage(this.img,this.posX,this.posY,this.size,this.size);
+    ctx.fillStyle = '#FFA500';
+    ctx.drawImage(this.img,this.posX,this.posY,this.size,this.size);
   }
   
   update(ctx)
@@ -28,22 +53,17 @@ export class Rabbit {
     
   }
 
-  animation(miliseconds)
-  {
+  animation(miliseconds) {
+
     let count = 0;
 
-    let interval = setInterval(function() 
-    {
-
-      if (typeof this.sprites[count] === undefined) {
+    let interval = setInterval(() => {
+      if (count >= this.sprites.length) {
         count = 0;
       }
-
-      this.img.src = this.sprites[count];
+      this.img = this.sprites[count];
       count++;
-
     }, miliseconds);
   }
-
   
 }

@@ -34,6 +34,16 @@
         
 
         <hr>
+    @push('scripts')
+    @vite('resources/js/games/launchGame.js')
+    @endpush
+
+
+    <div class="box-1" onclick="scrollToElement()">
+        <div class="btn btn-one">
+            <span>JOUER</span>
+        </div>
+    </div>
 
         <div class='containerAlign littleMargin1'>
 
@@ -45,7 +55,6 @@
 
     </div>
 
-    @vite('resources/js/games/RabbitDance/rabbitDance.js')
-    
+    @vite('resources/js/games/RabbitDance/rabbitDance.js')    
 
 @endsection
