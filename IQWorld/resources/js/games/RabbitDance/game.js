@@ -88,7 +88,7 @@ export class Game
         //Refresh le canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // PEUT ETRE CA QUI FAIT QUE LE BOUTON CLIQUE PLUSIEURS FOIS
+        // PEUT ETRE CA QUI FAIT QUE LE BOUTON CLIQUE PLUSIEURS FOIS !!!!
         this.canvas.removeEventListener('click', this.test)
 
         if(this.rabbitRun)
