@@ -9,7 +9,7 @@ export class Timer
     playTimer(milisecondsInterval, counter) {
 
         this.counter = counter;
-        
+
         return new Promise(resolve => {
             const interval = setInterval(() => {
                 if (this.countDown()) {
@@ -21,6 +21,7 @@ export class Timer
     }
     
     countDown() {
+
         this.counter--;
     
         if (this.counter == 0) 

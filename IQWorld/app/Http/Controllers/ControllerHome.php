@@ -26,7 +26,6 @@ class ControllerHome extends Controller
 
         $gameOfDay = [];
 
-        
         $reflexGame = $allGames->where('category_id', '=', 2)->values()[rand(0, $allGames->where('category_id', '=', 2)->count() - 1)];
         $memoryGame = $allGames->where('category_id', '=', 3)->values()[rand(0, $allGames->where('category_id', '=', 3)->count() - 1)];
         $logicGame = $allGames->where('category_id', '=', 5)->values()[rand(0, $allGames->where('category_id', '=', 5)->count() - 1)];
