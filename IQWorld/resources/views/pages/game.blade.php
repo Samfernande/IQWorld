@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class='background{{ $game['categoryGames']['name'] }} littlePadding1 colorWhite'>
+    <div class='background{{ $game['categoryGames']['name'] }} littlePadding1 colorWhite' id='background'>
 
         <div class='containerSpaceBetween'>
 
@@ -34,27 +34,30 @@
         
 
         <hr>
-    @push('scripts')
-    @vite('resources/js/games/launchGame.js')
-    @endpush
 
+        <!--=======JEU========-->
 
-    <div class="box-1" onclick="scrollToElement()">
-        <div class="btn btn-one">
-            <span>JOUER</span>
-        </div>
-    </div>
+        @vite(['resources/js/games/launchGame.js', 'resources/js/games/RabbitDance/rabbitDance.js'])
 
-        <div class='containerAlign littleMargin1'>
+            <div class="box-1" id='buttonPlay'>
+                <div class="btn btn-one">
+                    <span>JOUER</span>
+                </div>
+            </div>
 
-            <canvas id="canvasGames" width="500" height="500" style="border:1px solid;">
-                Votre navigateur ne supporte pas le canvas.
-            </canvas>
+            <div id='textGame' class='containerMiddleColumn littleMargin1'>
+                <h1 id='titleGame'> </h1>
+                <p id='infoGame' class='smallText1'> </p>
+            </div>
 
-        </div>
+            <div class='containerAlign littleMargin1'>
 
-    </div>
+                <canvas id="canvasGames" width="300" height="500" style="border:1px solid;">
+                    Votre navigateur ne supporte pas le canvas.
+                </canvas>
 
-    @vite('resources/js/games/RabbitDance/rabbitDance.js')    
+            </div>
+
+    </div>  
 
 @endsection

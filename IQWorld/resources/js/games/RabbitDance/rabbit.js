@@ -1,13 +1,18 @@
+import { Soundizer } from "./audio";
+
 export class Rabbit {
   
   constructor(color, posX, posY, speedX, speedY, size) {
   
+    this.sound = new Soundizer();
+    this.canSound = true;
+
     this.color = color;
     this.getColor(this.color);
     this.posX = posX;
     this.posY = posY;
-    this.speedX = speedX;
-    this.speedY = speedY;
+    this.speedX = speedX / 3;
+    this.speedY = speedY / 3;
     this.size = size;
     this.sprites = [new Image(), new Image()];
     this.sprites[0].src = '/storage/static/gamesImage/RabbitDance/rabbits/rabbit1' + this.color + '.png';
@@ -15,7 +20,7 @@ export class Rabbit {
     
     this.img = this.sprites[0];
 
-    this.animation(((this.speedX + this.speedY) / 2) * 100, this.sprites);
+    this.animation((Math.abs((this.speedX + this.speedY) / 2) * 100), this.sprites);
 
   }
 
@@ -50,7 +55,20 @@ export class Rabbit {
   {
     this.posX += this.speedX;
     this.posY += this.speedY;
+
+    if(this.canSound)
+    {
+      setInterval(() => this.doSound(), 1000 * Math.abs(this.speedX + this.speedY));
+      this.canSound = false;
+    }
     
+    
+  }
+
+  doSound()
+  {
+      this.sound.play('rabbit');
+      this.canSound = true;
   }
 
   animation(miliseconds) {

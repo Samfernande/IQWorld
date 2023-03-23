@@ -1,5 +1,7 @@
 import { Rabbit } from './rabbit.js';
 import { Interface } from './interface.js';
+import { Timer } from './timer.js';
+
 
 export class Game 
 {
@@ -10,6 +12,7 @@ export class Game
 
         // Récupération de l'interface
         this.interfaceGame = new Interface();
+        this.countGame = new Timer();
 
         // Récupération du canvas
         this.canvas = document.getElementById("canvasGames");
@@ -58,14 +61,42 @@ export class Game
 
     drawInterface()
     {
+        this.interfaceGame.drawInterface(this.canvas, this.ctx, 'Yolo', '3', 0, 0, this.canvas.width, 60, 'black');
+        this.interfaceGame.drawInterface(this.canvas, this.ctx, 'Yolo', '3', 0, this.canvas.height-60, this.canvas.width, 60, 'black');
+        // Texte informations
+        this.interfaceGame.drawText("Yolo", '15px Fredoka', 'white', this.canvas.width / 2, 20, this.ctx);
 
+        // Texte timer
+        this.interfaceGame.drawText("5", '30px Fredoka', 'white', this.canvas.width / 2, this.canvas.height-30, this.ctx);
     }
 
-    play()
+    countDown(seconds)
+    {
+      seconds--;
+
+      if(seconds == 0)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+
+    // Pourquoi async ?
+    async play()
     {
         //Refresh le canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawRabbits();
         this.updateRabbits();
+        this.drawInterface();
+
+        // Pourquoi await ?
+        if(await this.countGame.playTimer(1000, 3))
+        {
+          console.log('YES');
+        }
     }
 }
