@@ -85,7 +85,7 @@ export class Game
 
     async play()
     {
-        //Refresh le canvas !!
+        //Refresh le canvas !!!!!!!
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         // PEUT ETRE CA QUI FAIT QUE LE BOUTON CLIQUE PLUSIEURS FOIS !!!!
