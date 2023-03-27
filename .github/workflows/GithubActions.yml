@@ -29,7 +29,9 @@ jobs:
           cd IQWorld
           composer install --prefer-dist --no-interaction --no-progress
       - name: Migrate Datas
-        run: php artisan migrate
+        run: |
+          cd IQWorld
+          php artisan migrate
               
       - name: Run tests
         run: |
