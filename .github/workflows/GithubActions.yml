@@ -24,16 +24,18 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
       - name: Install dependencies
         run: |
           cd IQWorld
           composer install --prefer-dist --no-interaction --no-progress
+      - name: Create database
+        run: |
+          mysql --host 127.0.0.1 --port 6044 -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS db_IQWorld;'
       - name: Migrate Datas
         run: |
           cd IQWorld
           php artisan migrate
-      - name: Add db
-        run: yes
       - name: Run tests
         run: |
           cd IQWorld 
