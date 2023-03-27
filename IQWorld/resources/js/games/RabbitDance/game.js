@@ -1,21 +1,30 @@
 import { Rabbit } from "./rabbit"
-// Utilisation de import
-import $ from 'jquery';
 
-export class Game
+export class RabbitGame
 {
-    constructor(gameDiv)
+    constructor(gameDiv, playerRank)
     {
         // Configurations
         this.gameDiv = gameDiv
         this.gameRect = gameDiv.getBoundingClientRect();
         this.rabbits = [];
+        this.isLogging = true;
+        if(!playerRank)
+        {
+            this.playerRank = 0;
+            this.isLogging = false;
+        }
+        else
+        {
+            this.playerRank = playerRank;
+        }
 
         //GameManager
         this.startGame = true;
         this.updateGame = false;
         this.endRound = false;
         this.results = false;
+        this.endGame = false;
         this.round = 0;
 
         // Game
@@ -23,101 +32,101 @@ export class Game
         this.numberRabbit = 0;
         this.playerAnswer = 0;
 
-        // Récupération des données de la base de données
-        $.ajax({
-            url: '/api/ma-route',
-            type: 'GET',
-            success: function(data) {
-                console.log(data);
-            }
-        });
     }
 
     play()
     {
-        let score = document.getElementById('score');
-        let round = document.getElementById('round');
+            let score = document.getElementById('score');
+            let round = document.getElementById('round');
 
-        if(score && round)
-        {
-            score.textContent = this.playerPoints + "pts";
-            round.textContent = "Round " + this.round + "/5";
-        }
-        
-        // Start Game
-        if(this.startGame)
-        {
-            this.round++;
-
-            // End Game
-            if (this.round == 6)
+            if(score && round)
             {
-                this.deleteAllChildren();
-                this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", "Good job ! You go to the next level");
-                this.createParagraph("instructions", "color: white; font-size: 60%; text-align: center", this.playerPoints + "pts");
-                this.createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "Your score has been saved");
-                this.startGame = false;
+                score.textContent = this.playerPoints + "pts";
+                round.textContent = "Round " + this.round + "/5";
             }
-            else
+            
+            // Start Game
+            if(this.startGame)
             {
-                this.rabbits = [];
+                this.round++;
+
+                // End Game
+                if (this.round == 6)
+                {
+                    this.deleteAllChildren();
+                    this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", "Good job !");
+                    this.createParagraph("instructions", "color: white; font-size: 60%; text-align: center", this.playerPoints + "pts");
+                    if(this.isLogging == false)
+                    {
+                        this.createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "You must be registered for your score to be saved");
+                    }
+                    else
+                    {
+                        this.createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "Your score has been saved");
+                    }
+                    this.startGame = false;
+                    this.endGame = true;
+                }
+                else
+                {
+                    this.rabbits = [];
+                    this.deleteAllChildren();
+                    this.colorRabbit = this.random(0, 3);
+                    this.getColor();
+                    this.createRabbits();
+                    this.numberRabbit = this.rabbits.filter(rabbit => rabbit.color === this.colorRabbit).length;
+                    this.createHeader();
+                    this.createParagraph("instructions", "color: white; font-size: 50%;", "Focus...");
+                    this.countdownRound();
+                    this.startGame = false;
+                    this.updateGame = true;
+                }
+
+                
+            }
+
+            if (this.updateGame)
+            {
+                this.update();
+            }
+
+            if (this.endRound)
+            {
                 this.deleteAllChildren();
-                this.colorRabbit = this.random(0, 3);
-                this.getColor();
-                this.createRabbits();
-                this.numberRabbit = this.rabbits.filter(rabbit => rabbit.color === this.colorRabbit).length;
                 this.createHeader();
-                this.createParagraph("instructions", "color: white; font-size: 50%;", "Focus...");
-                this.countdownRound();
-                this.startGame = false;
-                this.updateGame = true;
+                this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", "How many  " + this.colorRabbit +" rabbits were walking around ?")
+                this.createInterface();
+                this.endRound = false;
             }
 
-            
-        }
-
-        if (this.updateGame)
-        {
-            this.update();
-        }
-
-        if (this.endRound)
-        {
-            this.deleteAllChildren();
-            this.createHeader();
-            this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", "How many  " + this.colorRabbit +" rabbits were walking around ?")
-            this.createInterface();
-            this.endRound = false;
-        }
-
-        if (this.results)
-        {
-            this.deleteAllChildren();
-            this.createHeader();
-
-            if(this.playerAnswer == this.numberRabbit)
+            if (this.results)
             {
-                this.playerPoints += 250;
-                this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", "Good job !");
+                this.deleteAllChildren();
+                this.createHeader();
+
+                if(this.playerAnswer == this.numberRabbit)
+                {
+                    this.playerPoints += 350 * (this.playerRank + 1);
+                    this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", "Good job !");
+                }
+                else
+                {
+                    this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", "Missed...");
+                }
+                
+                let confirmButton = document.createElement("button");
+                confirmButton.innerHTML = "Continue";
+                confirmButton.classList = "buttonGame";
+
+                let self = this;
+                confirmButton.addEventListener("click", function() {
+                self.startGame = true;
+                });
+
+                this.gameDiv.appendChild(confirmButton);
+
+                this.results = false;
             }
-            else
-            {
-                this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", "Missed...");
-            }
-            
-            let confirmButton = document.createElement("button");
-            confirmButton.innerHTML = "Continue";
-            confirmButton.classList = "buttonGame";
-
-            let self = this;
-            confirmButton.addEventListener("click", function() {
-            self.startGame = true;
-            });
-
-            this.gameDiv.appendChild(confirmButton);
-
-            this.results = false;
-        }
 
     }
 
@@ -205,7 +214,7 @@ export class Game
     createRabbits()
     {
         // Création des lapins
-        for(let i = 0; i < this.random(1 + Math.round(this.round / 4), 5 + Math.round(this.round / 4)) ; i++)
+        for(let i = 0; i < this.random(1 + Math.round(this.round / 4) + this.playerRank, 5 + Math.round(this.round / 4)) + this.playerRank; i++)
         {
             this.rabbits.push(new Rabbit(this.random(0, this.gameRect.right - 250), this.random(0, this.gameRect.top), this.random(1 + (this.round / 5), 4 + (this.round / 5)), this.random(1 + (this.round / 5), 4 + (this.round / 5)), this.random(100, 250), this.random(0, 4)));
             this.gameDiv.appendChild(this.rabbits[i].img)

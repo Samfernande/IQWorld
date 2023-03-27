@@ -2,6 +2,7 @@
 
 @section('content')
 
+<meta game={{$game->id}}>
     <div class='background{{ $game['categoryGames']['name'] }} littlePadding1  colorWhite backgroundGame'>
 
         <div class='containerSpaceBetween'>
