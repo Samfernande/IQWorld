@@ -12,9 +12,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Install dependencies
-        run: 
-              cd IQWorld 
-              composer install --prefer-dist --no-interaction --no-progress
+        run: |
+          cd sous-repertoire
+          composer install --prefer-dist --no-interaction --no-progress
               
       - name: Run tests
         run: php artisan test
