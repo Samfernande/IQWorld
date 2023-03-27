@@ -32,8 +32,8 @@ jobs:
         run: |
           cd IQWorld
           php artisan migrate
-          yes
-              
+      - name: Add db
+        run: yes
       - name: Run tests
         run: |
           cd IQWorld 
