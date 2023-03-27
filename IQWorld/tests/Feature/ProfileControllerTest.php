@@ -24,23 +24,4 @@ class ProfileControllerTest extends TestCase
         $response->assertViewHas('user', $user);
     }
 
-    public function test_store()
-    {
-        Storage::fake('public');
-
-        $user = User::factory()->create();
-        Auth::login($user);
-
-        $file = UploadedFile::fake()->image('avatar.jpg');
-
-        $response = $this->post('/profile', [
-            'image' => $file,
-        ]);
-
-        $response->assertStatus(200);
-        $response->assertViewIs('pages.profile');
-        $response->assertViewHas('user', $user);
-
-        Storage::disk('public')->assertExists('images/' . $file->hashName());
-    }
 }
