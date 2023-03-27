@@ -152,6 +152,55 @@ img {
     transform: scale(0.1, 1);
   }
 
+  .file-input {
+    padding: 1% 2%;
+    margin: 2%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .file-input::-webkit-file-upload-button {
+    background: #4CAF50;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .file-input:hover::-webkit-file-upload-button {
+    background: #3e8e41;
+  }
+
+  .profilePicture img {
+    width: 200px;
+    height: 200px;
+    box-shadow: 4px 4px 10px rgb(0, 0, 0, 0.5);
+  }
+
+  #game {
+    position: relative;
+}
+
+.buttonGame {
+  background-color: #4CAF50; /* Couleur de fond verte */
+  border: none; /* Pas de bordure */
+  color: white; /* Texte blanc */
+  padding: 15px 32px; /* Rembourrage */
+  text-align: center; /* Texte centré */
+  text-decoration: none; /* Pas de soulignement */
+  display: inline-block; /* Affichage en ligne */
+  font-size: 16px; /* Taille de police */
+  border-radius: 12px; /* Bords arrondis */
+  transition-duration: 0.4s; /* Durée de la transition */
+  margin: 10px;
+}
+
+.buttonGame:hover {
+  background-color: #3e8e41; /* Couleur de fond plus foncée au survol */
+}
+
   /* Style pour les écrans étroits */
 @media screen and (max-width: 900px) {
     /* Style de la barre de navigation */

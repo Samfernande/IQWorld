@@ -29,8 +29,8 @@
             <a href="{{ route('login') }}">@lang("text.login")</a>
             <a href="{{ route('register') }}">@lang("text.register")</a>
         @else
-            <a href="">Profil</a>
-            <a href="{{ url('logout') }}">Se déconnecter</a>
+            <a href="{{ route('profile', ['id' => Auth::user()->id]) }}">@lang("text.profile")</a>
+            <a href="{{ url('logout') }}">@lang("text.disconnect")</a>
         @endguest
         <a class='smallText2' href="{{ route('language.switch', ['lang' => 'fr']) }}">FR</a>
         <a class='smallText2' href="{{ route('language.switch', ['lang' => 'en']) }}">EN</a>

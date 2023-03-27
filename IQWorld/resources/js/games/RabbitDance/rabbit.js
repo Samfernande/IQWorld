@@ -1,87 +1,75 @@
-import { Soundizer } from "./audio";
-
-export class Rabbit {
-  
-  constructor(color, posX, posY, speedX, speedY, size) {
-  
-    this.sound = new Soundizer();
-    this.canSound = true;
-
-    this.color = color;
-    this.getColor(this.color);
-    this.posX = posX;
-    this.posY = posY;
-    this.speedX = speedX / 3;
-    this.speedY = speedY / 3;
-    this.size = size;
-    this.sprites = [new Image(), new Image()];
-    this.sprites[0].src = '/storage/static/gamesImage/RabbitDance/rabbits/rabbit1' + this.color + '.png';
-    this.sprites[1].src = '/storage/static/gamesImage/RabbitDance/rabbits/rabbit2' + this.color + '.png';
-    
-    this.img = this.sprites[0];
-
-    this.animation((Math.abs((this.speedX + this.speedY) / 2) * 100), this.sprites);
-
-  }
-
-  getColor(color)
-  {
-    switch (color) {
-      case 0:
-        this.color = 'white'
-        break;
-      case 1:
-        this.color = 'blue'
-        break;
-      case 2:
-        this.color = 'red'
-        break;
-      case 3:
-        this.color = 'yellow'
-        break;
-      default:
-        this.color = 'white'
-          break;
-    }
-  }
-  
-  draw(ctx, canvas)
-  {
-    ctx.fillStyle = '#FFA500';
-    ctx.drawImage(this.img,this.posX,this.posY,this.size,this.size);
-  }
-  
-  update(ctx)
-  {
-    this.posX += this.speedX;
-    this.posY += this.speedY;
-
-    if(this.canSound)
+export class Rabbit
+{
+    constructor(x, y, speedX, speedY, size, color)
     {
-      setInterval(() => this.doSound(), 1000 * Math.abs(this.speedX + this.speedY));
-      this.canSound = false;
+
+        this.color = color;
+        this.getColor();
+
+        this.img = new Image();
+        this.imgSource = ['/storage/static/gamesImage/RabbitDance/rabbits/rabbit1' + this.color +'.png', 
+                          '/storage/static/gamesImage/RabbitDance/rabbits/rabbit2' + this.color +'.png'
+                         ];
+        this.img.src = this.imgSource[0];
+        this.counterAnimation = 0;
+
+        this.x = x;
+        this.y = y;
+        this.speedX = speedX;
+        this.speedY = speedY
+        this.size = size;
+
+        setInterval(() => {
+            this.animation();
+        }, 1 / ((this.speedX + this.speedY) / 1000));
     }
+
+    animation()
+    {
+        if(this.counterAnimation == 0)
+        {
+            this.img.src = this.imgSource[1];
+            this.counterAnimation++;
+        }
+        else
+        {
+            this.img.src = this.imgSource[0];
+            this.counterAnimation = 0;
+        }
+    }
+
+    move(gameRect)
+    {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x < 0 || this.x > gameRect.width - this.size) {
+            this.speedX =- this.speedX;
+        }
     
-    
-  }
+        if (this.y < 0 || this.y > gameRect.height - this.size) {
+            this.speedY =- this.speedY;
+        }
+    }
 
-  doSound()
-  {
-      this.sound.play('rabbit');
-      this.canSound = true;
-  }
-
-  animation(miliseconds) {
-
-    let count = 0;
-
-    let interval = setInterval(() => {
-      if (count >= this.sprites.length) {
-        count = 0;
-      }
-      this.img = this.sprites[count];
-      count++;
-    }, miliseconds);
-  }
-  
+    getColor()
+    {
+        switch (this.color) {
+            case 0:
+                this.color = 'blue';
+              break;
+            case 1:
+                this.color = 'red';
+              break;
+            case 2:
+                this.color = 'white';
+              break;
+            case 3:
+                this.color = 'yellow';
+              break;
+            default:
+                this.color = 'white';
+                break;
+          }
+    }
 }

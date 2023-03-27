@@ -25,6 +25,13 @@ Route::get('/game/{id}', [ControllerGames::class, 'gameInfo'])->name('gameInfo')
 
 Route::get('/language/{lang}', [LanguageController::class, 'switchLang'])->name('language.switch');
 
+Route::get('/profile/{id}', [ProfileController::class, 'profile'])->name('profile');
+
+Route::post('/profile/{id}', [ProfileController::class, 'store'])->name('profile');
+
+
+
+
 
 // TRUCS CHIANTS 
 

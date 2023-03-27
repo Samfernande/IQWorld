@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mar. 14 mars 2023 à 14:39
+-- Généré le : dim. 26 mars 2023 à 20:40
 -- Version du serveur : 8.0.30
 -- Version de PHP : 8.0.19
 
@@ -96,10 +96,18 @@ CREATE TABLE `joueurs_points` (
   `id` bigint UNSIGNED NOT NULL,
   `points` int NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
-  `game_id` bigint UNSIGNED NOT NULL,
+  `games_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `joueurs_points`
+--
+
+INSERT INTO `joueurs_points` (`id`, `points`, `user_id`, `games_id`, `created_at`, `updated_at`) VALUES
+(1, 334, 1, 2, NULL, NULL),
+(2, 20, 1, 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -234,7 +242,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `imgPath`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role`) VALUES
-(1, 'Admin', NULL, 'Admin@admin.com', NULL, '$2y$10$O8KNoq7PNYlTVKjLltaTauiPipFrSf57t5H12o65GI2fPRBqBtNLO', NULL, '2023-03-14 09:57:32', '2023-03-14 09:57:32', NULL);
+(1, 'Admin', 'images/ngYR0BSGorWfzy9ImyZpx0trlslHCMZftDk66kWP.png', 'Admin@admin.com', NULL, '$2y$10$O8KNoq7PNYlTVKjLltaTauiPipFrSf57t5H12o65GI2fPRBqBtNLO', NULL, '2023-03-14 09:57:32', '2023-03-26 19:51:18', NULL),
+(4, 'PtitSpaghetti', 'images/H6XLmA4lLH6OmFwJx2hI47Sp2RqDtmLfvNuLQ3on.jpg', 'nadia@gmail.com', NULL, '$2y$10$t3gTobeKn6U9cDZvFqquEuuFfXFcOVUbEVeCk4NeOvwdZMkA2ntju', NULL, '2023-03-24 22:26:32', '2023-03-25 16:07:27', NULL);
 
 --
 -- Index pour les tables déchargées
@@ -266,7 +275,7 @@ ALTER TABLE `games`
 ALTER TABLE `joueurs_points`
   ADD PRIMARY KEY (`id`),
   ADD KEY `joueurs_points_user_id_foreign` (`user_id`),
-  ADD KEY `joueurs_points_game_id_foreign` (`game_id`);
+  ADD KEY `joueurs_points_game_id_foreign` (`games_id`);
 
 --
 -- Index pour la table `migrations`
@@ -344,7 +353,7 @@ ALTER TABLE `games`
 -- AUTO_INCREMENT pour la table `joueurs_points`
 --
 ALTER TABLE `joueurs_points`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `migrations`
@@ -380,7 +389,7 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Contraintes pour les tables déchargées
@@ -396,7 +405,7 @@ ALTER TABLE `games`
 -- Contraintes pour la table `joueurs_points`
 --
 ALTER TABLE `joueurs_points`
-  ADD CONSTRAINT `joueurs_points_game_id_foreign` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `joueurs_points_game_id_foreign` FOREIGN KEY (`games_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `joueurs_points_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

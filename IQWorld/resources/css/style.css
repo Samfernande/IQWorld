@@ -24,6 +24,14 @@ p, h1, h2, h3, a, label, span {
     padding: 1%;
 }
 
+.bigMargin1 {
+    margin: 4%;
+}
+
+.bigMargin2 {
+    margin: 5%;
+}
+
 .littleMargin1 {
     margin: 2%;
 }
@@ -50,6 +58,15 @@ p, h1, h2, h3, a, label, span {
 
 .textCenter {
     text-align: center;
+}
+
+.roundBorder {
+    border-radius: 20px;
+}
+
+.height1
+{
+    height: 450px;
 }
 
 @media screen and (max-width: 900px) {

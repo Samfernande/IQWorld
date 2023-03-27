@@ -20,12 +20,12 @@
     "src": "resources/css/container.css"
   },
   "resources/css/specific.css": {
-    "file": "assets/specific-88f2bea5.css",
+    "file": "assets/specific-94c03c60.css",
     "isEntry": true,
     "src": "resources/css/specific.css"
   },
   "resources/css/style.css": {
-    "file": "assets/style-f56c3c2a.css",
+    "file": "assets/style-7a662242.css",
     "isEntry": true,
     "src": "resources/css/style.css"
   },
@@ -34,13 +34,8 @@
     "isEntry": true,
     "src": "resources/js/app.js"
   },
-  "resources/js/games/RabbitDance/rabbitDance.js": {
-    "file": "assets/rabbitDance-39a26018.js",
-    "isEntry": true,
-    "src": "resources/js/games/RabbitDance/rabbitDance.js"
-  },
   "resources/js/games/launchGame.js": {
-    "file": "assets/launchGame-a6182913.js",
+    "file": "assets/launchGame-f7c84ef9.js",
     "isEntry": true,
     "src": "resources/js/games/launchGame.js"
   },

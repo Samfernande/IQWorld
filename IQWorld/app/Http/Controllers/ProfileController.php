@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,50 +12,36 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
+    function profile($id)
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $user = User::with('game')->findOrFail($id);
+
+        return view('pages/profile')->with('user', $user);
     }
 
-    /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $request->user()->fill($request->validated());
+    public function store(Request $request)
+{
+    $user = User::findOrFail(Auth::id());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
+    // Validez la demande pour vous assurer qu'un fichier a été téléchargé
+    $request->validate([
+        'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+    ]);
 
-        $request->user()->save();
+    // Récupérez le fichier téléchargé
+    $image = $request->file('image');
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
-    }
+    // Enregistrez l'image dans le système de fichiers public
+    $path = $image->store('images', ['disk' => 'public']);
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current-password'],
-        ]);
+    $request->image->move(public_path('storage/images'), $path);
 
-        $user = $request->user();
+    $user->imgPath = $path;
+    $user->save();
 
-        Auth::logout();
+    return view("pages/profile")->with('user', $user);
 
-        $user->delete();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
-    }
+    // Votre code pour traiter l'image ici
+}
 }
