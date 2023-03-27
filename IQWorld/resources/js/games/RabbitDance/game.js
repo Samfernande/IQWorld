@@ -1,4 +1,6 @@
 import { Rabbit } from "./rabbit"
+// Utilisation de import
+import $ from 'jquery';
 
 export class Game
 {
@@ -14,31 +16,64 @@ export class Game
         this.updateGame = false;
         this.endRound = false;
         this.results = false;
-        this.end = false;
         this.round = 0;
 
         // Game
         this.playerPoints = 0;
         this.numberRabbit = 0;
         this.playerAnswer = 0;
+
+        // Récupération des données de la base de données
+        $.ajax({
+            url: '/api/ma-route',
+            type: 'GET',
+            success: function(data) {
+                console.log(data);
+            }
+        });
     }
 
     play()
     {
+        let score = document.getElementById('score');
+        let round = document.getElementById('round');
+
+        if(score && round)
+        {
+            score.textContent = this.playerPoints + "pts";
+            round.textContent = "Round " + this.round + "/5";
+        }
+        
+        // Start Game
         if(this.startGame)
         {
-            this.rabbits = [];
-            this.deleteAllChildren();
-            this.colorRabbit = this.random(0, 3);
-            this.getColor();
-            this.createRabbits();
-            this.numberRabbit = this.rabbits.filter(rabbit => rabbit.color === this.colorRabbit).length;
-            console.log(this.numberRabbit)
-            this.createParagraph("instructions", "color: white; font-size: 50%;", "Concentrez-vous...");
-            this.countdownRound();
-            this.startGame = false;
-            this.updateGame = true;
             this.round++;
+
+            // End Game
+            if (this.round == 6)
+            {
+                this.deleteAllChildren();
+                this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", "Good job ! You go to the next level");
+                this.createParagraph("instructions", "color: white; font-size: 60%; text-align: center", this.playerPoints + "pts");
+                this.createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "Your score has been saved");
+                this.startGame = false;
+            }
+            else
+            {
+                this.rabbits = [];
+                this.deleteAllChildren();
+                this.colorRabbit = this.random(0, 3);
+                this.getColor();
+                this.createRabbits();
+                this.numberRabbit = this.rabbits.filter(rabbit => rabbit.color === this.colorRabbit).length;
+                this.createHeader();
+                this.createParagraph("instructions", "color: white; font-size: 50%;", "Focus...");
+                this.countdownRound();
+                this.startGame = false;
+                this.updateGame = true;
+            }
+
+            
         }
 
         if (this.updateGame)
@@ -49,7 +84,8 @@ export class Game
         if (this.endRound)
         {
             this.deleteAllChildren();
-            this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", "Combien de lapins " + this.colorRabbit +" se promenaient ?")
+            this.createHeader();
+            this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", "How many  " + this.colorRabbit +" rabbits were walking around ?")
             this.createInterface();
             this.endRound = false;
         }
@@ -57,20 +93,20 @@ export class Game
         if (this.results)
         {
             this.deleteAllChildren();
+            this.createHeader();
+
             if(this.playerAnswer == this.numberRabbit)
             {
                 this.playerPoints += 250;
-                this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", "Bien joué !")
-                this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", this.playerPoints + "pts")
+                this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", "Good job !");
             }
             else
             {
-                this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", "Dommage...");
-                this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", this.playerPoints + "pts")
+                this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", "Missed...");
             }
             
             let confirmButton = document.createElement("button");
-            confirmButton.innerHTML = "Continuer";
+            confirmButton.innerHTML = "Continue";
             confirmButton.classList = "buttonGame";
 
             let self = this;
@@ -80,9 +116,9 @@ export class Game
 
             this.gameDiv.appendChild(confirmButton);
 
-
             this.results = false;
         }
+
     }
 
     getColor()
@@ -123,6 +159,26 @@ export class Game
         p.style = styles;
         p.textContent = content;
         this.gameDiv.appendChild(p);
+    }
+
+    createHeader()
+    {
+        let div = document.createElement("div");
+        div.classList = "containerSpaceBetween";
+        div.style = "width: 90%"
+
+        let score = document.createElement("p");
+        score.id = 'score';
+        score.classList = "smallText2 noMargin"
+
+        let round = document.createElement("p");
+        round.id = 'round';
+        round.classList = "smallText2 noMargin"
+
+        div.appendChild(score);
+        div.appendChild(round);
+
+        this.gameDiv.appendChild(div);
     }
 
     // Compte à rebours pour les rounds
@@ -183,7 +239,7 @@ export class Game
         number.textContent = "1";
         number.style = "font-size: 50%"
         let confirmButton = document.createElement("button");
-        confirmButton.innerHTML = "Confirmer";
+        confirmButton.innerHTML = "Confirm";
         confirmButton.classList = "buttonGame";
       
         // Ajoute les événements aux boutons
