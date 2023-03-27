@@ -40,8 +40,5 @@ class ProfileController extends Controller
     $user->save();
 
     return view("pages/profile")->with('user', $user);
-
-
-    // Votre code pour traiter l'image ici
 }
 }
