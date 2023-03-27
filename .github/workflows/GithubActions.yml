@@ -8,6 +8,19 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
+    
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: mydb
+          MYSQL_USER: myuser
+          MYSQL_PASSWORD: mypassword
+        ports:
+          - 6044:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -20,3 +33,4 @@ jobs:
         run: |
           cd IQWorld 
           php artisan test
+        
