@@ -1,3 +1,5 @@
+CREATE DATABASE db_IQWorld;
+USE db_IQWorld;
 -- phpMyAdmin SQL Dump
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
