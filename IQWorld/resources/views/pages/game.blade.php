@@ -44,14 +44,21 @@
 
         <div class='containerAlign littleMargin1'>
 
+        @if ($user != null)
             <div class="card colorWhite backgroundDark littleMargin1">
                 <h1>Vos statistiques</h1>
-                <p class='smallText1'>- 98'992 points</p>
-                <p class='smallText1'>- Rang : Nul à ch*er</p>
-                <p class='smallText1'>- Temps de réponse moyen : 99s</p>
+                <p class='smallText1'>- Rang : {{ $ranking }}</p>
+                <p class='smallText1'>- Points : {{ $user['game'][0]['pivot']['points']}}</p>
             </div>
 
         </div>
+        @else
+        <div class="card colorWhite backgroundDark littleMargin1">
+                <h1>Statistiques</h1>
+                <p class='smallText1'>- Rang : {{ $ranking }}</p>
+                <p class='smallText1'>- Points : 0</p>
+            </div>
+        @endif
 
         
 

@@ -43,11 +43,11 @@ export class Rabbit
         this.x += this.speedX;
         this.y += this.speedY;
 
-        if (this.x < 0 || this.x > gameRect.width - this.size) {
+        if (this.x < 0 || this.x > gameRect.width - this.size - 10) {
             this.speedX =- this.speedX;
         }
     
-        if (this.y < 0 || this.y > gameRect.height - this.size) {
+        if (this.y < 0 || this.y > gameRect.height - this.size - 10) {
             this.speedY =- this.speedY;
         }
     }

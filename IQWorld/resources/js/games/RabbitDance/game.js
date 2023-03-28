@@ -216,7 +216,7 @@ export class RabbitGame
         // Création des lapins
         for(let i = 0; i < this.random(1 + Math.round(this.round / 4) + this.playerRank, 5 + Math.round(this.round / 4)) + this.playerRank; i++)
         {
-            this.rabbits.push(new Rabbit(this.random(0, this.gameRect.right - 250), this.random(0, this.gameRect.top), this.random(1 + (this.round / 5), 4 + (this.round / 5)), this.random(1 + (this.round / 5), 4 + (this.round / 5)), this.random(100, 250), this.random(0, 4)));
+            this.rabbits.push(new Rabbit(this.random(0, this.gameRect.right - 250), this.random(0, this.gameRect.top - 10), this.random(1 + (this.round / 5) + this.playerRank, 4 + (this.round / 5) + this.playerRank), this.random(1 + (this.round / 5) + this.playerRank, 4 + (this.round / 5) + this.playerRank), this.random(100, 250), this.random(0, 4)));
             this.gameDiv.appendChild(this.rabbits[i].img)
         }
     }
