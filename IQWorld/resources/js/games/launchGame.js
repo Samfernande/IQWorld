@@ -1,4 +1,6 @@
 import { RabbitGame } from "./RabbitDance/game.js"
+import { AttenTouchGame } from "./AttenTouch/game.js"
+
 import $ from 'jquery';
 
 const idMeta = document.querySelector('meta[id]');
@@ -95,16 +97,16 @@ let buttonClick = function()
 // Méthode sélectionnant le bon jeu suivant l'id de la page
 function chooseGame()
 {
-
   switch (parseInt(idGame)) {
+
     case 1:
       return undefined;
     case 2:
-      return undefined;
+      return undefined
     case 3:
       return new RabbitGame(gameDiv, playerRank(playerDataPoints));
     case 4:
-      return undefined;
+      return new AttenTouchGame(gameDiv, playerRank(playerDataPoints));
     default:
       return undefined;
   }
@@ -121,16 +123,56 @@ function startGame()
     }
     else
     {
-      if( idUser !== undefined && game.playerPoints > playerDataPoints)
-      {
-        playerDataPoints = game.playerPoints;
-        addPlayerData();
-      }
+      showEndGame();
     }
   }, 10);
 }
 
+function deleteAllChildren() {
+  while (gameDiv.firstChild) {
+      gameDiv.removeChild(gameDiv.firstChild);
+  }
+}
+
+function createParagraph(id, styles, content) {
+  let p = document.createElement("p");
+  p.id = id;
+  p.style = styles;
+  p.textContent = content;
+  gameDiv.appendChild(p);
+}
+
 myButton.addEventListener("click", buttonClick);
+
+// PROBLEME AVEC LES POINTS
+function showEndGame()
+{
+  deleteAllChildren();
+
+  if( idUser !== undefined && game.playerPoints > playerDataPoints)
+      {
+        deleteAllChildren();
+
+        if (game.isLogging == false) 
+        {
+          createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "You must be registered for your score to be saved");
+        }
+        else 
+        {
+          createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "Your score has been saved");
+        }
+        playerDataPoints = game.playerPoints;
+        addPlayerData();
+      }
+      else
+      {
+        createParagraph("instructions", "color: white; font-size: 60%; text-align: center", game.playerPoints + "pts");
+        createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "You haven't broken your record! Your score has not been saved");
+      }
+
+      createParagraph("instructions", "color: white; font-size: 60%; text-align: center", game.playerPoints + "pts");
+
+}
 
 function countdown() {
   let count = 3;

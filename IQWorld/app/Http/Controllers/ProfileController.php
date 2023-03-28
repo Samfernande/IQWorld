@@ -20,7 +20,7 @@ class ProfileController extends Controller
     }
 
     public function store(Request $request)
-{
+    {
     $user = User::findOrFail(Auth::id());
 
     // Validez la demande pour vous assurer qu'un fichier a été téléchargé
@@ -40,5 +40,5 @@ class ProfileController extends Controller
     $user->save();
 
     return view("pages/profile")->with('user', $user);
-}
+    }
 }

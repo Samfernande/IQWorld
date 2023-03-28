@@ -9,6 +9,8 @@ export class RabbitGame
         this.gameRect = gameDiv.getBoundingClientRect();
         this.rabbits = [];
         this.isLogging = true;
+        this.endGame = false;
+
         if(!playerRank)
         {
             this.playerRank = 0;
@@ -24,13 +26,14 @@ export class RabbitGame
         this.updateGame = false;
         this.endRound = false;
         this.results = false;
-        this.endGame = false;
         this.round = 0;
 
         // Game
         this.playerPoints = 0;
         this.numberRabbit = 0;
         this.playerAnswer = 0;
+        this.rightAudio = new Audio('/storage/static/sounds/games/right.wav');
+        this.falseAudio = new Audio('/storage/static/sounds/games/false.wav');
 
     }
 
@@ -53,17 +56,6 @@ export class RabbitGame
                 // End Game
                 if (this.round == 6)
                 {
-                    this.deleteAllChildren();
-                    this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", "Good job !");
-                    this.createParagraph("instructions", "color: white; font-size: 60%; text-align: center", this.playerPoints + "pts");
-                    if(this.isLogging == false)
-                    {
-                        this.createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "You must be registered for your score to be saved");
-                    }
-                    else
-                    {
-                        this.createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "Your score has been saved");
-                    }
                     this.startGame = false;
                     this.endGame = true;
                 }
@@ -108,10 +100,12 @@ export class RabbitGame
                 {
                     this.playerPoints += 350 * (this.playerRank + 1);
                     this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", "Good job !");
+                    this.rightAudio.play();
                 }
                 else
                 {
                     this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", "Missed...");
+                    this.falseAudio.play();
                 }
                 
                 let confirmButton = document.createElement("button");
