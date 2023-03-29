@@ -25,10 +25,12 @@ Route::get('/user/{id}/{game_id}', function ($id, $game_id) {
     return ['points' => $points];
 });
 
-// Méthode qui permet de mettre à jour les points du joueur
 Route::post('/user/{id}/{game_id}', function ($id, $game_id) {
     $points = request('points');
+    $accuracy = request('accuracy');
+    $reaction_time = request('reaction_time');
+    $created_date = request('created_date');
     $user = User::findOrFail($id);
-    $user->game()->syncWithoutDetaching([$game_id => ['points' => $points]]);
+    $user->game()->attach($game_id, ['points' => $points, 'accuracy' => $accuracy, 'reaction_time' => $reaction_time, 'created_at' => $created_date]);
     return ['success' => true];
 });

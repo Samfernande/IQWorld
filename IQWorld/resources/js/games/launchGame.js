@@ -14,7 +14,10 @@ gameMeta.remove(); // Suppression de la balise meta à des fins de sécurité
 var myButton = document.getElementById("buttonPlay"); // Récupération du bouton play
 var gameDiv = document.getElementById("game"); // Récupération de la div de jeu
 
+// Variables qui seront ajoutées à la base de données à la fin du jeu
 let playerDataPoints = undefined;
+let playerDataAccuracy = undefined;
+let playerDataReactionTime = undefined;
 
 // Rang du joueur
 function playerRank(points)
@@ -61,7 +64,12 @@ function addPlayerData() {
   $.ajax({
       url: '/api/user/' + idUser + "/" + idGame,
       type: 'POST',
-      data: {points: playerDataPoints},
+      data: {
+        points: playerDataPoints,
+        accuracy: playerDataAccuracy,
+        reaction_time: playerDataReactionTime,
+        created_date: getCurrentDateTime()
+      },
       success: function(data) {
           console.log('Données ajoutées avec succès!');
       }
@@ -112,19 +120,16 @@ function chooseGame()
   }
 }
 
-function startGame()
-{
+function startGame() {
   let game = chooseGame();
   //Lancement du jeu
-  setInterval(function() {
-    if(!game.endGame)
-    {
-      game.play();
-    }
-    else
-    {
-      showEndGame();
-    }
+  let intervalId = setInterval(function() {
+      if (!game.endGame) {
+          game.play();
+      } else {
+          showEndGame(game);
+          clearInterval(intervalId);
+      }
   }, 10);
 }
 
@@ -145,32 +150,32 @@ function createParagraph(id, styles, content) {
 myButton.addEventListener("click", buttonClick);
 
 // PROBLEME AVEC LES POINTS
-function showEndGame()
+function showEndGame(game)
 {
   deleteAllChildren();
 
-  if( idUser !== undefined && game.playerPoints > playerDataPoints)
-      {
-        deleteAllChildren();
+  if(game.isLogging == true)
+  {
+    if (game.playerPoints > playerDataPoints) 
+    {
+      createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "Your score has been saved");
+    }
+    else 
+    {
+      createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "You haven't broken your record! Your score has not been saved");
+    }
+  }
+  else
+  {
+    createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "You must be registered for your score to be saved");
+  }
 
-        if (game.isLogging == false) 
-        {
-          createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "You must be registered for your score to be saved");
-        }
-        else 
-        {
-          createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "Your score has been saved");
-        }
-        playerDataPoints = game.playerPoints;
-        addPlayerData();
-      }
-      else
-      {
-        createParagraph("instructions", "color: white; font-size: 60%; text-align: center", game.playerPoints + "pts");
-        createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "You haven't broken your record! Your score has not been saved");
-      }
+    createParagraph("instructions", "color: white; font-size: 60%; text-align: center", "Your score : " + game.playerPoints + "pts");
 
-      createParagraph("instructions", "color: white; font-size: 60%; text-align: center", game.playerPoints + "pts");
+    playerDataPoints = game.playerPoints ? game.playerPoints : null;
+    playerDataAccuracy = game.playerAccuracy ? game.playerAccuracy : null;
+    playerDataReactionTime = game.playerReactionTime ? game.playerReactionTime : null;
+    addPlayerData();
 
 }
 
@@ -217,6 +222,18 @@ function changeBackground() {
   element.style.transition = "background-color 0.5s ease-in-out";
 });
   
+}
+
+//Date du jour
+function getCurrentDateTime() {
+  let date = new Date();
+  let year = date.getFullYear();
+  let month = (date.getMonth() + 1).toString().padStart(2, '0');
+  let day = date.getDate().toString().padStart(2, '0');
+  let hours = date.getHours().toString().padStart(2, '0');
+  let minutes = date.getMinutes().toString().padStart(2, '0');
+  let seconds = date.getSeconds().toString().padStart(2, '0');
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
 // Retire le bouton 

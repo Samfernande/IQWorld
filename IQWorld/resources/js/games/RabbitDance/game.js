@@ -30,6 +30,8 @@ export class RabbitGame
 
         // Game
         this.playerPoints = 0;
+        this.playerAccuracy = 0;
+        this.rightAnswer = 0;
         this.numberRabbit = 0;
         this.playerAnswer = 0;
         this.rightAudio = new Audio('/storage/static/sounds/games/right.wav');
@@ -57,6 +59,7 @@ export class RabbitGame
                 if (this.round == 6)
                 {
                     this.startGame = false;
+                    this.playerAccuracy = this.rightAnswer / 5, 2;
                     this.endGame = true;
                 }
                 else
@@ -101,6 +104,7 @@ export class RabbitGame
                     this.playerPoints += 350 * (this.playerRank + 1);
                     this.createParagraph("instructions", "color: white; font-size: 70%; text-align: center", "Good job !");
                     this.rightAudio.play();
+                    this.rightAnswer++;
                 }
                 else
                 {

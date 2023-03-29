@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('joueurs_points', function (Blueprint $table) {
             $table->id();
             $table->integer('points');
+            $table->float('accuracy');
+            $table->float('reaction_time');
             $table->foreignId('user_id')
                 ->constrained('users', 'id')
                 ->onUpdate('cascade')
