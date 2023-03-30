@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\games;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class ControllerGames extends Controller
@@ -14,13 +15,14 @@ class ControllerGames extends Controller
     public function gameInfo($id)
     {
         $game = games::with('categoryGames')->findOrFail($id);
+    
         $user = User::with(['game' => function ($query) use ($id) {
-            $query->where('games.id', $id);
-        }])
-        ->whereHas('game', function ($query) use ($id) {
-            $query->where('games.id', $id);
-        })
-        ->find(Auth::id());
+                    $query->where('games.id', $id);
+                }])
+                ->whereHas('game', function ($query) use ($id) {
+                    $query->where('games.id', $id);
+                })
+                ->find(Auth::id());
 
         return view('pages/game')->with([
             'game' => $game,

@@ -16,7 +16,27 @@ class ProfileController extends Controller
     {
         $user = User::with('game')->findOrFail($id);
 
-        return view('pages/profile')->with('user', $user);
+        $groupedData['games'] = $user->game->groupBy('pivot.games_id');
+        $groupedData['accuracy'] = $this->getAverage($groupedData['games'], 'accuracy');
+        $groupedData['reaction_time'] = $this->getAverage($groupedData['games'], 'reaction_time');
+
+
+
+        return view('pages/profile')->with(['user' => $user, 'groupedData' => $groupedData]);
+    }
+
+    // Méthode qui récupère la moyenne d'une caractéristique pour chaque jeu
+    public function getAverage($table, $column)
+    {
+        $averages = [];
+
+        foreach ($table as $gameId => $gameData) {
+            $columnData = $gameData->pluck("pivot.$column");
+            $average = $columnData->average();
+            $averages[$gameId] = $average;
+        }
+
+        return $averages;
     }
 
     public function store(Request $request)

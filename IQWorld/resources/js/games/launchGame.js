@@ -18,6 +18,7 @@ var gameDiv = document.getElementById("game"); // Récupération de la div de je
 let playerDataPoints = undefined;
 let playerDataAccuracy = undefined;
 let playerDataReactionTime = undefined;
+let canUpdate = undefined;
 
 // Rang du joueur
 function playerRank(points)
@@ -84,6 +85,7 @@ function getPlayerData() {
       type: 'GET',
       success: function(data) {
           playerDataPoints = data['points'];
+          canUpdate = data['can_update'];
       },
   });
 }

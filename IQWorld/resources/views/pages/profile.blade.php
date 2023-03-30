@@ -27,8 +27,6 @@
         </div>
     @endif
 
-    
-
     <p class='smallText1'>Date d'inscription : {{ $user['created_at'] }}</p>
 
     <hr>
@@ -36,20 +34,34 @@
     <h1>Statistiques</h1>
 
     @if (!$user->game->isEmpty())
-        <div class='containerAlign littleMargin1'>
-            @foreach ($user->game as $game)
-            <div class="card background{{$game['categoryGames']['name']}} littleMargin1 colorWhite">
-                <div class='containerSpaceBetween'>
-                    <p>{{$game->name}}</p>
-                    <img src="{{ Storage::url("static/gamesIcon/" . $game['categoryGames']['name'] . ".png") }}" alt="Avatar" class="card-image">
-                </div>
-                <p class='smallText1'>Points : {{$game->pivot->points}}</p>
+
+    <div class='containerAlign littleMargin1'>
+
+        @foreach ($groupedData['games'] as $key => $game)
+
+        <div class="card background{{$game[0]['categoryGames']['name']}} littleMargin1 colorWhite">
+            <div class='containerSpaceBetween'>
+
+                <p>{{$game[0]['name']}}</p>
+
+                <img src="{{ Storage::url("static/gamesIcon/" . $game[0]['categoryGames']['name'] . ".png") }}" alt="Avatar" class="card-image">
             </div>
-            @endforeach
+
+            <p class='smallText1'>Record : {{$game->max('pivot.points')}}</p>
+
+            @if (isset($groupedData['accuracy'][$key]))
+            <p class='smallText1'>Précision moyenne : {{$groupedData['accuracy'][$key] * 100}} %</p>
+            @endif
+            
+            @if (isset($groupedData['reaction_time'][$key]))
+            <p class='smallText1'>Temps de réaction moyen : {{$groupedData['reaction_time'][$key]}}</p>
+            @endif
         </div>
-    @else
-    <p>Ce joueur ne semble pas avoir de statistiques pour l'instant...</p>
-    @endif
+        @endforeach
+    </div>
+@else
+<p>Ce joueur ne semble pas avoir de statistiques pour l'instant...</p>
+@endif
 
 
 </div>

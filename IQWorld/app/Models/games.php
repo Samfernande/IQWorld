@@ -20,6 +20,6 @@ class games extends Model
 
     public function user()
     {
-        return $this->belongsToMany(User::class, 'joueurs_points')->withPivot('points');
+        return $this->belongsToMany(User::class, 'joueurs_points')->withPivot('points', 'accuracy', 'reaction_time', 'created_at');
     }
 }
