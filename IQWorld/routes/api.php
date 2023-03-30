@@ -40,7 +40,8 @@ Route::post('/user/{id}/{game_id}', function ($id, $game_id) {
     $accuracy = request('accuracy');
     $reaction_time = request('reaction_time');
     $created_date = request('created_date');
+    $rank_up = request('rank_up');
     $user = User::findOrFail($id);
-    $user->game()->attach($game_id, ['points' => $points, 'accuracy' => $accuracy, 'reaction_time' => $reaction_time, 'created_at' => $created_date, 'rank_up' => 1]);
+    $user->game()->attach($game_id, ['points' => $points, 'accuracy' => $accuracy, 'reaction_time' => $reaction_time, 'created_at' => $created_date, 'rank_up' => $rank_up]);
     return ['success' => true];
 });

@@ -1,15 +1,9 @@
-DROP DATABASE IF EXISTS db_IQWorld; 
-
-CREATE DATABASE db_IQWorld;
-
-USE db_IQWorld;
-
 -- phpMyAdmin SQL Dump
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le : mar. 28 mars 2023 à 18:53
+-- Généré le : jeu. 30 mars 2023 à 14:29
 -- Version du serveur : 8.0.30
 -- Version de PHP : 8.0.19
 
@@ -106,17 +100,9 @@ CREATE TABLE `joueurs_points` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `accuracy` float DEFAULT NULL,
-  `reaction_time` float DEFAULT NULL
+  `reaction_time` float DEFAULT NULL,
+  `rank_up` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `joueurs_points`
---
-
-INSERT INTO `joueurs_points` (`id`, `points`, `user_id`, `games_id`, `created_at`, `updated_at`, `accuracy`, `reaction_time`) VALUES
-(6, 1050, 1, 3, NULL, NULL, 1, NULL),
-(7, 4200, 1, 3, NULL, NULL, 1, NULL),
-(8, 3150, 1, 3, NULL, NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -362,7 +348,7 @@ ALTER TABLE `games`
 -- AUTO_INCREMENT pour la table `joueurs_points`
 --
 ALTER TABLE `joueurs_points`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `migrations`

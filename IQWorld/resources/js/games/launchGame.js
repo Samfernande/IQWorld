@@ -61,7 +61,7 @@ function playerRank(points)
   }
 }
 
-function addPlayerData() {
+function addPlayerData(updateRank) {
   $.ajax({
       url: '/api/user/' + idUser + "/" + idGame,
       type: 'POST',
@@ -69,6 +69,7 @@ function addPlayerData() {
         points: playerDataPoints,
         accuracy: playerDataAccuracy,
         reaction_time: playerDataReactionTime,
+        rank_up: updateRank,
         created_date: getCurrentDateTime()
       },
       success: function(data) {
@@ -156,29 +157,41 @@ function showEndGame(game)
 {
   deleteAllChildren();
 
+  // Détecte si connecté
   if(game.isLogging == true)
   {
+    // Si les points du joueur sont supérieurs à son score max
     if (game.playerPoints > playerDataPoints) 
     {
-      createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "Your score has been saved");
+      playerDataPoints = game.playerPoints ? game.playerPoints : null;
+      playerDataAccuracy = game.playerAccuracy ? game.playerAccuracy : null;
+      playerDataReactionTime = game.playerReactionTime ? game.playerReactionTime : null;
+
+      if(canUpdate)
+      {
+        createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "Your score has been saved");
+        addPlayerData(1);
+      }
+      else
+      {
+        createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "You have already passed today, pass again tomorrow !");
+        addPlayerData(0);
+      }
     }
+    // Si les points du joueur ne sont pas supérieurs à son score max
     else 
     {
-      createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "You haven't broken your record! Your score has not been saved");
+      createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "Too bad... You'll do better next time");
+      addPlayerData(0);
     }
   }
+  // S'il n'est pas connecté
   else
   {
     createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "You must be registered for your score to be saved");
   }
 
     createParagraph("instructions", "color: white; font-size: 60%; text-align: center", "Your score : " + game.playerPoints + "pts");
-
-    playerDataPoints = game.playerPoints ? game.playerPoints : null;
-    playerDataAccuracy = game.playerAccuracy ? game.playerAccuracy : null;
-    playerDataReactionTime = game.playerReactionTime ? game.playerReactionTime : null;
-    addPlayerData();
-
 }
 
 function countdown() {
