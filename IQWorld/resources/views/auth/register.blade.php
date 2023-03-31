@@ -50,7 +50,7 @@
                 {{ __('Déjà inscrit ?') }}
             </a>
 
-            <x-primary-button class="ml-4">
+            <x-primary-button class="ml-4" id='registerButton'>
                 {{ __("S'inscrire") }}
             </x-primary-button>
         </div>
