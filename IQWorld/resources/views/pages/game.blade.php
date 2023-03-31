@@ -44,20 +44,22 @@
 
         <div class='containerAlign littleMargin1'>
 
-        @if (Auth::id())
-    @php
+        @if ($user !== null)
+
+        @php
         $maxPoints = 0;
         foreach ($user['game'] as $game) {
             if ($game['pivot']['points'] > $maxPoints) {
                 $maxPoints = $game['pivot']['points'];
             }
         }
-    @endphp
-    <div class="card colorWhite backgroundDark littleMargin1">
-        <h1>Vos statistiques</h1>
-        <p class='smallText1'>- Rang : {{ $ranking }}</p>
-        <p class='smallText1'>- Record : {{ $maxPoints }}pts</p>
-    </div>
+        @endphp
+
+            <div class="card colorWhite backgroundDark littleMargin1">
+                <h1>Vos statistiques</h1>
+                <p class='smallText1'>- Rang : {{ $ranking }}</p>
+                <p class='smallText1'>- Record : {{ $maxPoints }}pts</p>
+            </div>
         @endif
 
         
