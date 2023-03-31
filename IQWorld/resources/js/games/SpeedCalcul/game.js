@@ -21,6 +21,7 @@ export class SpeedCalculGame
             this.playerRank = playerRank;
         } 
         
+        // Programm
         this.designer.reset();
         this.designer.addParagraph('On your calculators !', [], {color: 'white', position: 'absolute', fontSize: '50%', transform: 'translate(0, 3%)'});
         this.designer.addParagraph('0pts', [], {color: 'white', position: 'absolute', left: 0, fontSize: '50%', margin: '5px'});
