@@ -223,12 +223,17 @@ img {
   transition: all 0.1s ease-in-out;
 }
 
-.calculator button.clear {
+.calculator button.yoyo {
   grid-row: 4;
-  grid-column: span 2;
+  grid-column: span 1;
 }
 
 .calculator button.zero {
+  grid-row: 4;
+  grid-column: span 1;
+}
+
+.calculator button.clear {
   grid-row: 4;
   grid-column: span 1;
 }
