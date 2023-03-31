@@ -11,7 +11,7 @@ export class SpeedCalculGame
         this.isLogging = true;
         this.endGame = false;
 
-        // Objets importants
+        // Objets importants !
         this.designer = new Designer(this.gameDiv, this.gameRect);
         this.timer = new Timer();
 
