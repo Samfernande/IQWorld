@@ -44,7 +44,7 @@
 
         <div class='containerAlign littleMargin1'>
 
-        @if ($user != null)
+        @if (Auth::id())
     @php
         $maxPoints = 0;
         foreach ($user['game'] as $game) {
@@ -56,14 +56,8 @@
     <div class="card colorWhite backgroundDark littleMargin1">
         <h1>Vos statistiques</h1>
         <p class='smallText1'>- Rang : {{ $ranking }}</p>
-        <p class='smallText1'>- Record : {{ $maxPoints }}</p>
+        <p class='smallText1'>- Record : {{ $maxPoints }}pts</p>
     </div>
-        @else
-        <div class="card colorWhite backgroundDark littleMargin1">
-                <h1>Statistiques</h1>
-                <p class='smallText1'>- Rang : {{ $ranking }}</p>
-                <p class='smallText1'>- Points : 0</p>
-            </div>
         @endif
 
         

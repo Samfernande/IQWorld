@@ -8,13 +8,11 @@ export class RabbitGame
         this.gameDiv = gameDiv
         this.gameRect = gameDiv.getBoundingClientRect();
         this.rabbits = [];
-        this.isLogging = true;
         this.endGame = false;
 
         if(!playerRank)
         {
             this.playerRank = 0;
-            this.isLogging = false;
         }
         else
         {

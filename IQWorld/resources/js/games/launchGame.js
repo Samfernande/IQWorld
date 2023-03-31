@@ -1,5 +1,5 @@
 import { RabbitGame } from "./RabbitDance/game.js"
-import { AttenTouchGame } from "./AttenTouch/game.js"
+import { SpeedCalculGame } from "./SpeedCalcul/game.js"
 
 import $ from 'jquery';
 
@@ -113,7 +113,7 @@ function chooseGame()
     case 1:
       return undefined;
     case 2:
-      return undefined
+      return new SpeedCalculGame(gameDiv, playerRank(playerDataPoints));
     case 3:
       return new RabbitGame(gameDiv, playerRank(playerDataPoints));
     case 4:
@@ -158,7 +158,7 @@ function showEndGame(game)
   deleteAllChildren();
 
   // Détecte si connecté
-  if(game.isLogging == true)
+  if(idUser != '')
   {
     // Si les points du joueur sont supérieurs à son score max
     if (game.playerPoints > playerDataPoints) 

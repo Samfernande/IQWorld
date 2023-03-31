@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/user/{id}/{game_id}', function ($id, $game_id) {
     $lastRankUp = User::findOrFail($id)->game()->where('games.id', $game_id)->where('rank_up', 1)->latest()->first();
 
-    if (Carbon::parse($lastRankUp->pivot->created_at)->isToday()) 
+    if (!empty($lastRankUp) && Carbon::parse($lastRankUp->pivot->created_at)->isSameDay()) 
     {
         $can_update = false;
     } 
@@ -32,7 +32,8 @@ Route::get('/user/{id}/{game_id}', function ($id, $game_id) {
         $can_update = true;
     }
 
-    return ['points' => $lastRankUp['pivot']['points'], 'can_update' => $can_update];
+    return $lastRankUp ? ['points' => $lastRankUp['pivot']['points'], 'can_update' => $can_update] : ['points' => 0, 'can_update' => $can_update];
+
 });
 
 Route::post('/user/{id}/{game_id}', function ($id, $game_id) {
