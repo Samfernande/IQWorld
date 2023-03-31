@@ -12,10 +12,10 @@ class RegisterTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/register')
-                    ->type('name', 'Test')
-                    ->type('email', 'test@example.com')
-                    ->type('password', 'password')
-                    ->type('password_confirmation', 'password')
+                    ->type('name', 'TestUser')
+                    ->type('email', 'test@examplee.com')
+                    ->type('password', 'password1234')
+                    ->type('password_confirmation', 'password1234')
                     ->press("#registerButton")
                     ->assertPathIs('/');
         });
