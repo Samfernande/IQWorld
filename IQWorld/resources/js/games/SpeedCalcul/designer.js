@@ -6,7 +6,7 @@ export class Designer
         this.gameRect = gameRect;
     }
 
-    // Exemple d'utilisations :
+    // Exemple d'utilisation :
     /*
     this.designer.addParagraph('Bonjour le monde!', ['text-center', 'text-lg'], {color: 'white', position: 'absolute', fontSize: '12px'});
     */
