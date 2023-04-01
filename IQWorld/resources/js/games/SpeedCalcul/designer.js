@@ -1,22 +1,28 @@
+import { AudioPlayer } from "./audio.js"
+
 export class Designer
 {
     constructor(gameDiv, gameRect)
     {
         this.gameDiv = gameDiv;
         this.gameRect = gameRect;
+
+        this.buttonClickSound = new AudioPlayer('/storage/static/sounds/games/buttonClick.wav');
+
     }
 
     // Exemple d'utilisation :
     /*
     this.designer.addParagraph('Bonjour le monde!', ['text-center', 'text-lg'], {color: 'white', position: 'absolute', fontSize: '12px'});
     */
-    addParagraph(text, cssClasses = [], cssStyles = {}, position = 'beforeend') {
+    addParagraph(text, cssClasses = [], cssStyles = {}, id = 'paragraph') {
         const p = document.createElement('p');
         p.textContent = text;
         p.classList.add(...cssClasses);
+        p.id = id;
         Object.assign(p.style, cssStyles);
-        this.gameDiv.insertAdjacentElement(position, p);
-    }
+        this.gameDiv.insertAdjacentElement('beforeend', p);
+      }
 
     createCalculatorButtons() {
       const calculatorDiv = document.createElement("div");
@@ -26,15 +32,19 @@ export class Designer
           button.textContent = i;
           button.addEventListener("click", () => {
               console.log(`You clicked button ${i}`);
+              this.buttonClickSound.stop();
+              this.buttonClickSound.play();
           });
           calculatorDiv.appendChild(button);
       }
   
       const yoyo = document.createElement("button");
       yoyo.classList.add("yoyo");
-      yoyo.textContent = "";
+      yoyo.textContent = "E";
       yoyo.addEventListener("click", () => {
           console.log(`You clicked the yoyo button`);
+          this.buttonClickSound.stop();
+          this.buttonClickSound.play();
       });
       calculatorDiv.appendChild(yoyo);
   
@@ -43,6 +53,8 @@ export class Designer
       zeroButton.textContent = 0;
       zeroButton.addEventListener("click", () => {
           console.log(`You clicked button 0`);
+          this.buttonClickSound.stop();
+          this.buttonClickSound.play();
       });
       calculatorDiv.appendChild(zeroButton);
   
@@ -51,6 +63,8 @@ export class Designer
       clearButton.textContent = "C";
       clearButton.addEventListener("click", () => {
           console.log(`You clicked the clear button`);
+          this.buttonClickSound.stop();
+          this.buttonClickSound.play();
       });
       calculatorDiv.appendChild(clearButton);
   
