@@ -123,7 +123,7 @@ export class SpeedCalculGame
           this.userCombo = 5;
         }
 
-        this.playerPoints += Math.round(10 * (this.userCombo * 2) * (this.playerRank + 1));
+        this.playerPoints += Math.round(10 * (this.userCombo * 2) * ((this.playerRank * 1.5) + 1));
         this.playerPointsText.textContent = this.playerPoints + "pts";
 
       }
@@ -228,7 +228,7 @@ export class SpeedCalculGame
             }
           }
 
-          if(result < 0)
+          if(result <= 0)
           {
             result = null;
           }
