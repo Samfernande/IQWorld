@@ -1,7 +1,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Edu+SA+Beginner:wght@400;500&family=Fredoka&display=swap');
 
-p, h1, h2, h3, a, label, span {
+p, h1, h2, h3, a, label, span, tr {
     font-family: 'Edu SA Beginner', cursive;
     font-family: 'Fredoka', sans-serif;
     text-decoration: none;

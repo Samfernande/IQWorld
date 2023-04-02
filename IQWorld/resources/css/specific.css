@@ -248,6 +248,64 @@ img {
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
 }
 
+.tableRanking {
+  font-size: 70%;
+  border-collapse: collapse;
+  width: 70%;
+}
+
+.tableRanking th,
+.tableRanking td {
+  text-align: left;
+  padding: 8px;
+}
+
+.tableRanking tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.tableRanking th {
+  background-color: #626262;
+  color: white;
+}
+
+.tableRanking tr:hover {
+  background-color: #ddd;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 30%;
+  padding: 1%;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid #ccc;
+}
+
+.search-input:focus {
+  outline: none;
+  border-bottom: 2px solid #4CAF50;
+}
+
+.search-button {
+  width: 5%;
+  padding: 1%;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 100%;
+  cursor:pointer;
+}
+
+.search-button:hover {
+  background-color: #45a049;
+}
 
   /* Style pour les écrans étroits */
 @media screen and (max-width: 900px) {
