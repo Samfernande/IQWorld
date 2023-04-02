@@ -24,35 +24,39 @@ export class Designer
         this.gameDiv.insertAdjacentElement('beforeend', p);
       }
 
-    createCalculatorButtons() {
+    createCalculatorButtons(select, userValidation) {
       const calculatorDiv = document.createElement("div");
       calculatorDiv.classList.add("calculator");
+
+      let userAnswer = document.getElementById('userAnswer');
+
       for (let i = 9; i > 0; i--) {
           const button = document.createElement("button");
           button.textContent = i;
+
           button.addEventListener("click", () => {
-              console.log(`You clicked button ${i}`);
+              userAnswer.textContent += i;
               this.buttonClickSound.stop();
               this.buttonClickSound.play();
           });
           calculatorDiv.appendChild(button);
       }
   
-      const yoyo = document.createElement("button");
-      yoyo.classList.add("yoyo");
-      yoyo.textContent = "E";
-      yoyo.addEventListener("click", () => {
-          console.log(`You clicked the yoyo button`);
+      const enter = document.createElement("button");
+      enter.classList.add("enter");
+      enter.textContent = "E";
+      enter.addEventListener("click", () => {
+          select.userValidation = true;
           this.buttonClickSound.stop();
           this.buttonClickSound.play();
       });
-      calculatorDiv.appendChild(yoyo);
+      calculatorDiv.appendChild(enter);
   
       const zeroButton = document.createElement("button");
       zeroButton.classList.add("zero");
       zeroButton.textContent = 0;
       zeroButton.addEventListener("click", () => {
-          console.log(`You clicked button 0`);
+        userAnswer.textContent += 0;
           this.buttonClickSound.stop();
           this.buttonClickSound.play();
       });
@@ -62,7 +66,7 @@ export class Designer
       clearButton.classList.add("clear");
       clearButton.textContent = "C";
       clearButton.addEventListener("click", () => {
-          console.log(`You clicked the clear button`);
+            userAnswer.textContent = '';
           this.buttonClickSound.stop();
           this.buttonClickSound.play();
       });
@@ -107,6 +111,9 @@ export class Designer
               case 'Backspace':
                   button = document.querySelector('.calculator .clear');
                   break;
+            case 'Enter':
+                button = document.querySelector('.calculator .enter');
+                break;
           }
           if (button) {
               button.click();
