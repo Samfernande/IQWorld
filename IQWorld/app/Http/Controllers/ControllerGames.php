@@ -48,6 +48,7 @@ class ControllerGames extends Controller
     $points = DB::table('joueurs_points')
                 ->where('user_id', Auth::id())
                 ->where('rank_up', 1)
+                ->where('games_id', $idGame)
                 ->max('points');
     
     if($points == 0 || empty($points))

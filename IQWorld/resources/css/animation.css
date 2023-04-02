@@ -6,3 +6,29 @@
         transform: scale(2) rotate(10deg);
     }
 }
+
+@keyframes changeColor {
+    0% {
+      background-color: #00c735;
+    }
+    100% {
+      background-color: #484349;
+    }
+  }
+
+  .animateColor {
+    animation: changeColor 1s linear;
+  }
+
+  @keyframes changeColorWrong {
+    0% {
+      background-color: red;
+    }
+    100% {
+      background-color: #484349;
+    }
+  }
+
+  .animateColorWrong {
+    animation: changeColorWrong 0.5s linear;
+  }

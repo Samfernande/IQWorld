@@ -16,13 +16,16 @@ export class SpeedCalculGame
         this.designer = new Designer(this.gameDiv, this.gameRect);
         this.timer = new Timer();
         // Sons
-        this.countDownSound = new AudioPlayer('/storage/static/sounds/games/countDownSound.wav')
+        this.countDownSound = new AudioPlayer('/storage/static/sounds/games/countDownSound.wav');
+        this.rightAudio = new Audio('/storage/static/sounds/games/right.wav');
+        this.falseAudio = new Audio('/storage/static/sounds/games/false.wav');
 
         // Variables du jeu
         this.isEquation = false; // Si une equation est déjà présente
         this.userValidation = false; // Si l'utilisateur valide sa réponse
         this.canErase = false; // Si l'utilisateur reset ce qu'il a écrit
         this.userCombo = 0;
+        this.playerPoints = 0;
 
         if(!playerRank)
         {
@@ -37,14 +40,17 @@ export class SpeedCalculGame
         // Programm
         this.designer.reset();
         this.designer.addParagraph('On your calculators !', [], {color: 'white', position: 'absolute', fontSize: '50%', transform: 'translate(0, 3%)'});
-        this.designer.addParagraph('0pts', [], {color: 'white', position: 'absolute', left: 0, fontSize: '70%', margin: '5px'});
+        this.designer.addParagraph('0pts', [], {color: 'white', position: 'absolute', left: 0, fontSize: '70%', margin: '5px'}, 'playerPoints');
         this.designer.addParagraph('0:00', [], {color: 'white', position: 'absolute', right: 0, fontSize: '70%', margin: '5px'}, 'timer');
 
         this.designer.addParagraph('', [], {color: 'white', position: 'absolute', transform: 'translate(0%, 100%)', fontSize: '80%'}, 'operations');
         this.designer.addParagraph('', [], {color: 'white', position: 'absolute', transform: 'translate(0%, 350%)', fontSize: '60%'}, 'userAnswer');
+        this.designer.addParagraph('Combo : 0', [], {color: 'white', position: 'absolute', fontSize: '50%', left: 0, bottom: 0, margin: '5px'}, 'userCombo');
 
         this.operationText = document.getElementById('operations');
         this.userAnswer = document.getElementById('userAnswer');
+        this.playerPointsText = document.getElementById('playerPoints');
+        this.userComboText = document.getElementById('userCombo');
 
         this.designer.createCalculatorButtons(this, this.userValidation);
         this.countDown();
@@ -59,7 +65,22 @@ export class SpeedCalculGame
             this.countDownSound.play();
           }
         });
-        console.log("Le compte à rebours est terminé");
+        this.endGame = true;
+      }
+
+        changeBackgroundColor(color) {
+          if(color == 'green')
+          {
+            this.gameDiv.classList.add('animateColor');
+          }
+          else
+          {
+            this.gameDiv.classList.add('animateColorWrong');
+          }
+        this.gameDiv.addEventListener('animationend', () => {
+          this.gameDiv.classList.remove('animateColor');
+          this.gameDiv.classList.remove('animateColorWrong');
+        });
       }
 
     play()
@@ -67,6 +88,14 @@ export class SpeedCalculGame
       // S'il n'y a pas d'équations, en génère une
       if(!this.isEquation)
       {
+        if(this.userCombo == 5)
+        {
+          this.userComboText.textContent = 'Combo : MAX';
+        }
+        else
+        {
+          this.userComboText.textContent = 'Combo : ' + this.userCombo;
+        }
         this.equation = this.generateEquation();
         this.operationText.textContent = this.equation[0];
         this.isEquation = true;
@@ -85,10 +114,17 @@ export class SpeedCalculGame
         this.isEquation = false;
         this.userValidation = false;
         this.userCombo++;
-        console.log('JUSTE');
-        console.log(this.equation[2][this.equation[1]]);
-        console.log(parseInt(this.userAnswer.textContent));
+        this.rightAudio.play();
         this.userAnswer.textContent = '';
+        this.changeBackgroundColor('green');
+
+        if(this.userCombo >= 5)
+        {
+          this.userCombo = 5;
+        }
+
+        this.playerPoints += Math.round(10 * (this.userCombo * 2) * (this.playerRank + 1));
+        this.playerPointsText.textContent = this.playerPoints + "pts";
 
       }
       // Faux
@@ -97,10 +133,9 @@ export class SpeedCalculGame
         this.isEquation = false;
         this.userValidation = false;
         this.userCombo = 0;
-        console.log('FAUX');
-        console.log(this.equation[2][this.equation[1]]);
-        console.log(parseInt(this.userAnswer.textContent));
+        this.falseAudio.play();
         this.userAnswer.textContent = '';
+        this.changeBackgroundColor('red');
 
       }
 
@@ -110,12 +145,30 @@ export class SpeedCalculGame
     // Retourne le string à afficher, l'index du nombre enlevé et les valeurs présentes
     generateEquation() {
         // Opérateurs
-        const operations = ['+', '-', '*', '/'];
+        let operations = [];
+
+        console.log(this.playerRank);
+        if(this.playerRank == 0)
+        {
+          operations = ['+'];
+        }
+        else if(this.playerRank >= 1 && this.playerRank <= 3)
+        {
+          operations = ['+', '-'];
+        }
+        else if(this.playerRank >= 4 && this.playerRank <= 6)
+        {
+          operations = ['+', '-', '*'];
+        }
+        else if(this.playerRank >= 7)
+        {
+          operations = ['+', '-', '*', '/'];
+        }
 
         // Nombres
-        const num1 = Math.floor(Math.random() * 10) + 1;
-        const num2 = Math.floor(Math.random() * 10) + 1;
-        const num3 = Math.floor(Math.random() * 10) + 1;
+        const num1 = Math.floor(Math.random() * (3 + this.playerRank)) + 1;
+        const num2 = Math.floor(Math.random() * (3 + this.playerRank)) + 1;
+        const num3 = Math.floor(Math.random() * (3 + this.playerRank)) + 1;
       
         let equation; // Equation
         let equationMissing; // Equation
