@@ -58,7 +58,7 @@
             @endif
             
             @if (isset($groupedData['reaction_time'][$key]))
-            <p class='smallText1'>Temps de réaction moyen : {{$groupedData['reaction_time'][$key]}}</p>
+            <p class='smallText1'>Temps de réaction moyen : {{$groupedData['reaction_time'][$key]}}s</p>
             @endif
         </div>
         @endforeach

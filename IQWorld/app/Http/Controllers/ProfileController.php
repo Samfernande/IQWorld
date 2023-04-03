@@ -33,7 +33,7 @@ class ProfileController extends Controller
         foreach ($table as $gameId => $gameData) {
             $columnData = $gameData->pluck("pivot.$column");
             $average = $columnData->average();
-            $averages[$gameId] = $average;
+            $averages[$gameId] = round($average, 2);
         }
 
         return $averages;

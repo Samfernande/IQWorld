@@ -22,8 +22,10 @@ class ControllerGames extends Controller
 
     public function gameInfo($id)
     {
+        // Récupère les variables pour le jeu
         $game = games::with('categoryGames')->findOrFail($id);
     
+        // Récupère les données de l'utilisateur
         $user = User::with(['game' => function ($query) use ($id) {
                     $query->where('games.id', $id);
                 }])
@@ -32,6 +34,7 @@ class ControllerGames extends Controller
                 })
                 ->find(Auth::id());
 
+        // Récupère les données traitées pour les statistiques
         $statistics = DB::table(DB::raw('(
             WITH RECURSIVE intervalles AS (
                 SELECT 0 AS debut, 250 AS fin

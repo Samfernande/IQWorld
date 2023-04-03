@@ -84,8 +84,6 @@
             data.push([percentage, game.debut]);
         });
 
-        console.log(averagePointsPerGame)
-
         var option = {
             title: {
                 text: 'Average scores',

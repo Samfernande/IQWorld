@@ -87,10 +87,10 @@ function getPlayerData() {
       success: function(data) {
           playerDataPoints = data['points'];
           canUpdate = data['can_update'];
+console.log(playerDataPoints + "POINTS");
       },
   });
 }
-
 if(idUser != '')
 {
   getPlayerData();

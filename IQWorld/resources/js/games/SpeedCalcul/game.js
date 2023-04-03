@@ -26,6 +26,10 @@ export class SpeedCalculGame
         this.canErase = false; // Si l'utilisateur reset ce qu'il a écrit
         this.userCombo = 0;
         this.playerPoints = 0;
+        this.playerReactionTime = [];
+        this.playerAccuracy = 0;
+        this.round = 0;
+        this.rightAnswer = 0;
 
         if(!playerRank)
         {
@@ -57,6 +61,20 @@ export class SpeedCalculGame
     }
 
 
+    getAverage(numbers) {
+      if (numbers.length === 0) {
+          return 0; // ou toute autre valeur par défaut
+      }
+  
+      var sum = numbers.reduce(function(total, value) {
+          return total + value;
+      }, 0);
+  
+      var average = sum / numbers.length;
+  
+      return Number(average.toFixed(3));
+  }
+
     async countDown() {
         const timerText = document.getElementById('timer');
         await this.timer.countDownWithCallback(60, secondsLeft => {
@@ -65,6 +83,9 @@ export class SpeedCalculGame
             this.countDownSound.play();
           }
         });
+
+        this.playerReactionTime = this.getAverage(this.playerReactionTime);
+        this.playerAccuracy = Number((this.rightAnswer / this.round).toFixed(2));
         this.endGame = true;
       }
 
@@ -88,6 +109,8 @@ export class SpeedCalculGame
       // S'il n'y a pas d'équations, en génère une
       if(!this.isEquation)
       {
+        this.round++;
+
         if(this.userCombo == 5)
         {
           this.userComboText.textContent = 'Combo : MAX';
@@ -99,6 +122,7 @@ export class SpeedCalculGame
         this.equation = this.generateEquation();
         this.operationText.textContent = this.equation[0];
         this.isEquation = true;
+        this.timer.start();
       }
 
       // Si texte supérieur ou égal à 3, le valide automatiquement
@@ -111,12 +135,15 @@ export class SpeedCalculGame
       // Juste
       if(this.userValidation && parseInt(this.userAnswer.textContent) == this.equation[2][this.equation[1]])
       {
+        this.rightAnswer++;
         this.isEquation = false;
         this.userValidation = false;
         this.userCombo++;
         this.rightAudio.play();
         this.userAnswer.textContent = '';
         this.changeBackgroundColor('green');
+        this.timer.stop();
+        this.playerReactionTime.push(this.timer.getElapsedTime());
 
         if(this.userCombo >= 5)
         {
@@ -136,7 +163,7 @@ export class SpeedCalculGame
         this.falseAudio.play();
         this.userAnswer.textContent = '';
         this.changeBackgroundColor('red');
-
+        this.timer.stop();
       }
 
     }
@@ -146,6 +173,7 @@ export class SpeedCalculGame
     generateEquation() {
         // Opérateurs
         let operations = [];
+        console.log(this.playerRank + "RANK");
 
         console.log(this.playerRank);
         if(this.playerRank == 0)
@@ -223,7 +251,7 @@ export class SpeedCalculGame
                result = null;
                 break;
               case '*':
-                result *= num3;
+                result = null;
                 break;
             }
           }
