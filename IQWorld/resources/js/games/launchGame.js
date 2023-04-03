@@ -87,7 +87,6 @@ function getPlayerData() {
       success: function(data) {
           playerDataPoints = data['points'];
           canUpdate = data['can_update'];
-console.log(playerDataPoints + "POINTS");
       },
   });
 }
@@ -169,12 +168,12 @@ function showEndGame(game)
 
       if(canUpdate)
       {
-        createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "Your score has been saved");
+        createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "Congratulation ! You're leveling up !");
         addPlayerData(1);
       }
       else
       {
-        createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "You have already passed today, pass again tomorrow !");
+        createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "You have already moved up a rank, or your score is too low to move up.");
         addPlayerData(0);
       }
     }
