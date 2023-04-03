@@ -48,6 +48,10 @@ p, h1, h2, h3, a, label, span, tr {
     font-size: 300%;
 }
 
+.giganticText {
+    font-size: 500%;
+}
+
 .smallText1 {
     font-size: 130%;
 }
@@ -75,6 +79,10 @@ p, h1, h2, h3, a, label, span, tr {
         font-family: 'Edu SA Beginner', cursive;
         font-family: 'Fredoka', sans-serif;
         font-size: 80%;
+    }
+
+    .giganticText {
+        font-size: 400%;
     }
 
 }

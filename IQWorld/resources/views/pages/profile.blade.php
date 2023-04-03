@@ -69,7 +69,7 @@
 
 
 </div>
-
+@if (Auth::check() && Auth::id() == $user->id)
 <script>
 document.querySelector('input[type="file"]').addEventListener('change', function(event) {
     var maxSize = 1 * 1024 * 1024; // 10 Mo
@@ -80,6 +80,86 @@ document.querySelector('input[type="file"]').addEventListener('change', function
     }
 });
 </script>
+@endif
 
+<h1 class='bigText1 colorDark littleMargin1'>Centiles</h1>
+
+<p class='littleMargin1'>
+    A centile is a statistical measure that allows you to 
+    situate the level of a user in relation to other users. 
+    For example, if a user is at the 90th centile, 
+    this means that only 10% of players have scored higher than them. 
+    In other words, they performed better than 90% of players.
+</p>
+
+<div class='containerMiddleColumn littleMargin1 backgroundWhite'>
+
+    <div class="progress-circle">
+        <h1 class='giganticText colorDark noMargin'>{{ $generalPercentage }}%</h1>
+        <svg class='noMargin'>
+          <circle cx="75" cy="-25" r="100"></circle>
+          <circle cx="75" cy="-25" r="100"></circle>
+        </svg>
+    </div>
+
+    <script>
+        const percentage = document.querySelector('.giganticText').textContent.slice(0, -1);
+        document.querySelector('.progress-circle svg circle:nth-of-type(2)').style.setProperty('--percentage', percentage);
+
+        const textElement = document.querySelector('.giganticText');
+const finalValue = parseInt(textElement.textContent.slice(0, -1));
+let currentValue = 0;
+let startTime;
+
+const easeOutQuad = (t) => t * (2 - t);
+
+const animateValue = (timestamp) => {
+  if (!startTime) startTime = timestamp;
+  const elapsedTime = timestamp - startTime;
+  const duration = 2000; // durée de l'animation en millisecondes
+  currentValue = Math.round(easeOutQuad(elapsedTime / duration) * finalValue);
+  textElement.textContent = currentValue + '%';
+  if (elapsedTime < duration) {
+    requestAnimationFrame(animateValue);
+  } else {
+    textElement.textContent = finalValue + '%';
+  }
+};
+
+const handleScroll = () => {
+  const rect = textElement.getBoundingClientRect();
+  if (rect.top < window.innerHeight && !startTime) {
+    requestAnimationFrame(animateValue);
+  }
+};
+
+window.addEventListener('scroll', handleScroll);
+    </script>
+
+    <h1 class='littleMargin1 colorDark'>General</h1>
+    <div class="progress-container littleMargin1">
+        <div class="progress-bar" style="width:{{$generalPercentage}}%; background-color:#a0a0a0">{{$generalPercentage}}%</div>
+    </div><br>
+
+    <p>Reflexes</p>
+    <div class="progress-container">
+        <div class="progress-bar" style="width:{{$reflexesPercentage}}%; background-color:#EB4511">{{$reflexesPercentage}}%</div>
+    </div><br>
+    
+    <p>Concentration</p>
+    <div class="progress-container">
+        <div class="progress-bar" style="width:{{$concentrationPercentage}}%; background-color:#FE7F2D">{{$concentrationPercentage}}%</div>
+    </div><br>
+    
+    <p>Memory</p>
+    <div class="progress-container">
+        <div class="progress-bar" style="width:{{$memoryPercentage}}%; background-color:#5995ED">{{$memoryPercentage}}%</div>
+    </div><br>
+    
+    <p>Logic</p>
+    <div class="progress-container">
+        <div class="progress-bar" style="width:{{$logicPercentage}}%; background-color:#23CE6B">{{$logicPercentage}}%</div>
+    </div><br>
+</div>
 
 @endsection

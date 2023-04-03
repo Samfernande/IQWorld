@@ -22,8 +22,40 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/user/{id}/{game_id}', function ($id, $game_id) {
     $lastRankUp = User::findOrFail($id)->game()->where('games.id', $game_id)->where('rank_up', 1)->latest()->first();
+    $points = $lastRankUp['pivot']['points'];
+    $centiles = [1000, 2000, 4000, 6000, 8000, 10000];
+    $limitation = 0;
 
-    if (!empty($lastRankUp) && Carbon::parse($lastRankUp->pivot->created_at)->isSameDay()) 
+    if($points == 0 || $points == null)
+    {
+        $limitation = 0;
+    }
+    else if($points > 0 && $points <= 1000)
+    {
+        $limitation = 0;
+    }
+    else if($points > 1000 && $points <= 2000)
+    {
+        $limitation = 1;
+    }
+    else if($points > 2000 && $points <= 4000)
+    {
+        $limitation = 2;
+    }
+    else if($points > 4000 && $points <= 6000)
+    {
+        $limitation = 3;
+    }
+    else if($points > 6000 && $points <= 8000)
+    {
+        $limitation = 4;
+    }
+    else if($points > 8000 && $points <= 10000)
+    {
+        $limitation = 5;
+    }
+
+    if (!empty($lastRankUp) || Carbon::parse($lastRankUp->pivot->created_at)->isSameDay() || $points < $centiles[$limitation]) 
     {
         $can_update = false;
     } 

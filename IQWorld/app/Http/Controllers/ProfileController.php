@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
@@ -20,9 +21,15 @@ class ProfileController extends Controller
         $groupedData['accuracy'] = $this->getAverage($groupedData['games'], 'accuracy');
         $groupedData['reaction_time'] = $this->getAverage($groupedData['games'], 'reaction_time');
 
-
-
-        return view('pages/profile')->with(['user' => $user, 'groupedData' => $groupedData]);
+        return view('pages/profile')->with([
+            'user' => $user, 
+            'groupedData' => $groupedData, 
+            'generalPercentage' => $this->getGeneralPercentage($id),
+            'logicPercentage' => $this->getPercentageForCategory(5, $id),
+            'concentrationPercentage' => $this->getPercentageForCategory(4, $id),
+            'memoryPercentage' => $this->getPercentageForCategory(3, $id),
+            'reflexesPercentage' => $this->getPercentageForCategory(2, $id)
+        ]);
     }
 
     // Méthode qui récupère la moyenne d'une caractéristique pour chaque jeu
@@ -60,5 +67,47 @@ class ProfileController extends Controller
     $user->save();
 
     return view("pages/profile")->with('user', $user);
+    }
+
+    public function getPercentageForCategory($categoryId, $userId)
+    {
+        $maxScores = DB::table('joueurs_points')
+            ->join('games', 'joueurs_points.games_id', '=', 'games.id')
+            ->where('games.category_id', $categoryId)
+            ->selectRaw('joueurs_points.user_id, SUM(joueurs_points.points) as total_points')
+            ->groupBy('joueurs_points.user_id')
+            ->get();
+
+        $myScore = $maxScores->where('user_id', $userId)->first();
+
+        if ($myScore) {
+            $myTotalPoints = $myScore->total_points;
+            $lowerScores = $maxScores->where('total_points', '<', $myTotalPoints)->count();
+            $percentage = ($lowerScores / ($maxScores->count() - 1)) * 100;
+        } else {
+            // Le joueur spécifié n'a pas encore enregistré de score pour les jeux de cette catégorie
+            $percentage = 0;
+        }
+
+        return $percentage;
+    }
+
+    public function getGeneralPercentage($id)
+    {
+        $maxScores = DB::table('joueurs_points')
+            ->selectRaw('user_id, SUM(points) as total_points')
+            ->groupBy('user_id')
+            ->get();
+
+        $myScore = $maxScores->where('user_id', $id)->first();
+
+        if ($myScore) {
+            $myTotalPoints = $myScore->total_points;
+            $lowerScores = $maxScores->where('total_points', '<', $myTotalPoints)->count();
+            return ($lowerScores / ($maxScores->count() - 1)) * 100;
+
+        } else {
+                return 0;
+        }
     }
 }
