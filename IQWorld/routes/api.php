@@ -22,11 +22,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/user/{id}/{game_id}', function ($id, $game_id) {
     $lastRankUp = User::findOrFail($id)->game()->where('games.id', $game_id)->where('rank_up', 1)->latest()->first();
-    $points = $lastRankUp['pivot']['points'];
+    $points = $lastRankUp ? ($lastRankUp['pivot']['points'] ?? 0) : 0;
     $centiles = [1000, 2000, 4000, 6000, 8000, 10000];
     $limitation = 0;
 
-    if($points == 0 || $points == null)
+    if($points == null || $points == 0)
     {
         $limitation = 0;
     }
@@ -55,7 +55,7 @@ Route::get('/user/{id}/{game_id}', function ($id, $game_id) {
         $limitation = 5;
     }
 
-    if (!empty($lastRankUp) || Carbon::parse($lastRankUp->pivot->created_at)->isSameDay() || $points < $centiles[$limitation]) 
+    if ($lastRankUp && $lastRankUp['pivot'] != null && (Carbon::parse($lastRankUp->pivot->created_at)->isSameDay() || $points < $centiles[$limitation])) 
     {
         $can_update = false;
     } 
@@ -63,6 +63,7 @@ Route::get('/user/{id}/{game_id}', function ($id, $game_id) {
     {
         $can_update = true;
     }
+
 
     return $lastRankUp ? ['points' => $lastRankUp['pivot']['points'], 'can_update' => $can_update] : ['points' => 0, 'can_update' => $can_update];
 

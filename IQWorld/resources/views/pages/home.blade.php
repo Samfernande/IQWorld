@@ -46,7 +46,8 @@
         </div>
 
         <hr>
-
+        
+        <!--
         <h1 class='colorDark'>
             @lang('text.news')
         </h1>
@@ -65,7 +66,7 @@
         </div>
         @endforeach
 
-        <hr>
+        <hr>-->
 
         <h1 class='colorDark'>
             @lang('text.lastGames')

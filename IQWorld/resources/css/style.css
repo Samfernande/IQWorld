@@ -24,6 +24,14 @@ p, h1, h2, h3, a, label, span, tr {
     padding: 1%;
 }
 
+.bigPadding1 {
+    padding: 5%;
+}
+
+.bigPadding2 {
+    padding: 10%;
+}
+
 .bigMargin1 {
     margin: 4%;
 }

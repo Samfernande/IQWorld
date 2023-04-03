@@ -35,8 +35,6 @@
             <a href="{{ route('profile', ['id' => Auth::user()->id]) }}">@lang("text.profile")</a>
             <a href="{{ url('logout') }}">@lang("text.disconnect")</a>
         @endguest
-        <a class='smallText2' href="{{ route('language.switch', ['lang' => 'fr']) }}">FR</a>
-        <a class='smallText2' href="{{ route('language.switch', ['lang' => 'en']) }}">EN</a>
           
         </div>
                 {{-- <div>
@@ -54,4 +52,23 @@
     <body>
             @yield('content')
     </body>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="{{ route('home') }}">IQWorld</a>
+                <a href="">@lang("text.games")</a>
+                <a href="{{ route('rankings') }}">@lang("text.leaderboards")</a>
+                @guest
+                    <a href="{{ route('login') }}">@lang("text.login")</a>
+                    <a href="{{ route('register') }}">@lang("text.register")</a>
+                @else
+                    <a href="{{ route('profile', ['id' => Auth::user()->id]) }}">@lang("text.profile")</a>
+                    <a href="{{ url('logout') }}">@lang("text.disconnect")</a>
+                @endguest
+            </div>
+            <div class="footer-text">
+                Tous droits réservés © 2023 IQWorld
+            </div>
+        </div>
+    </footer>
 </html>
