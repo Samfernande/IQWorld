@@ -32,7 +32,7 @@ Route::post('/profile/{id}', [ProfileController::class, 'store'])->name('profile
 
 Route::get('/rankings', [ControllerRanking::class, 'rankings'])->name('rankings');
 
-Route::get('/rankings/games/{id}', [ProfileController::class, 'rankingsGames'])->name('rankings');
+Route::get('/rankings/games/{id}', [ProfileController::class, 'rankingsGames'])->name('rankingsGames');
 
 
 

@@ -4,6 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta id={{Auth::id()}}>
+        <!-- Script pour les graphiques -->
+        <script src="https://cdn.jsdelivr.net/npm/echarts@latest"></script>
         @vite([
                 'resources/css/style.css',
                 'resources/css/container.css', 
@@ -21,7 +23,7 @@
 
             <a href="{{ route('home') }}" class="backgroundBlue">IQWorld</a>
             <a href="">@lang("text.games")</a>
-            <a href="">@lang("text.leaderboards")</a>
+            <a href="{{ route('rankings') }}">@lang("text.leaderboards")</a>
             
           <!-- Ajouter un espace entre les liens à gauche et à droite -->
         <div style="flex-grow:1;"></div>

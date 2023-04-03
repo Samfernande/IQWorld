@@ -9,7 +9,11 @@
         <h1 class='littleMargin1 smallText1'>{{ $user['name'] }}</h1>
 
         <div class='profilePicture littlePadding2'>
+            @if(!empty($user['imgPath']))
             <img class='roundBorder' src="{{ Storage::url($user['imgPath']) }}" alt='Image du profil'/>
+            @else
+            <img class='roundBorder' src="{{ Storage::url('static/anonym.png') }}" alt='Image du profil'/>
+            @endif
         </div>
     </div>
 

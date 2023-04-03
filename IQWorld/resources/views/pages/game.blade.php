@@ -62,6 +62,82 @@
             </div>
         @endif
 
+
+        <div id="graph" style="width: 600px;height:400px;"></div>
+
+        <script type="text/javascript">
+            var averagePointsPerGame = @json($statistics);
+
+// Récupérez l'élément DOM dans lequel vous voulez afficher le graphique
+var chartDom = document.getElementById('graph');
+var myChart = echarts.init(chartDom);
+
+// Calculez le nombre total de scores
+var totalScores = averagePointsPerGame.reduce(function(total, game) {
+    return total + game.count;
+}, 0);
+
+// Préparez les données pour le graphique
+var data = [];
+averagePointsPerGame.forEach(function(game) {
+    var percentage = game.count / totalScores * 100;
+    data.push([percentage, game.debut]);
+});
+
+console.log(averagePointsPerGame)
+
+var option = {
+    xAxis: {
+        type: 'value',
+        name: 'Scores',
+        nameTextStyle: {
+            color: '#fff'
+        },
+        axisLabel: {
+            textStyle: {
+                color: '#fff'
+            }
+        },
+        splitLine: {
+            show: false
+        }
+    },
+    yAxis: {
+        type: 'value',
+        name: '% of players',
+        nameTextStyle: {
+            color: '#fff'
+        },
+        axisLabel: {
+            textStyle: {
+                color: '#fff'
+            },
+            formatter: function(value) {
+                return value + '%';
+            }
+        },
+        splitLine: {
+            show: false
+        }
+    },
+    series: [{
+        data: data.map(function(item) {
+            return [item[1], item[0]];
+        }),
+        type: 'line',
+        lineStyle: {
+            color: '#fff'
+        },
+        itemStyle: {
+            color: '#fff'
+        }
+    }]
+};
+
+// Affichez le graphique
+myChart.setOption(option);
+    </script>
+
         
 
     </div>  
