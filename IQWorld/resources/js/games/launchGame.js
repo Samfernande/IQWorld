@@ -19,6 +19,8 @@ let playerDataPoints = undefined;
 let playerDataAccuracy = undefined;
 let playerDataReactionTime = undefined;
 let canUpdate = undefined;
+let centile = undefined;
+
 
 // Rang du joueur
 function playerRank(points)
@@ -87,6 +89,7 @@ function getPlayerData() {
       success: function(data) {
           playerDataPoints = data['points'];
           canUpdate = data['can_update'];
+          centile = data['centile'];
       },
   });
 }
@@ -155,29 +158,33 @@ myButton.addEventListener("click", buttonClick);
 function showEndGame(game)
 {
   deleteAllChildren();
+  console.log("Centile :" + centile);
+  console.log("Nouveau point:" + game.playerPoints);
+  console.log("Ancien point:" + playerDataPoints);
 
   // Détecte si connecté
   if(idUser != '')
   {
-    // Si les points du joueur sont supérieurs à son score max
-    if (game.playerPoints > playerDataPoints) 
+    playerDataPoints = game.playerPoints ? game.playerPoints : null;
+    playerDataAccuracy = game.playerAccuracy ? game.playerAccuracy : null;
+    playerDataReactionTime = game.playerReactionTime ? game.playerReactionTime : null;
+    // Si les points du joueur sont supérieurs au centile ou que les anciens points du joueurs sont à 0
+    if (game.playerPoints > centile || playerDataPoints == 0) 
     {
-      playerDataPoints = game.playerPoints ? game.playerPoints : null;
-      playerDataAccuracy = game.playerAccuracy ? game.playerAccuracy : null;
-      playerDataReactionTime = game.playerReactionTime ? game.playerReactionTime : null;
-
+      // Si le score peut être update
       if(canUpdate)
       {
-        createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "Congratulation ! You're leveling up !");
-        addPlayerData(1);
+          createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "Congratulation ! You're leveling up !");
+          addPlayerData(1);
       }
-      else
+      // S'il ne peut pas update, mais dépasse quand même le centile
+      else if(game.playerPoints > centile)
       {
-        createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "You have already moved up a rank, or your score is too low to move up.");
+        createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "You have already moved up a rank today !");
         addPlayerData(0);
       }
     }
-    // Si les points du joueur ne sont pas supérieurs à son score max
+    // Si les points du joueur ne dépassent pas le centile
     else 
     {
       createParagraph("instructions", "color: white; font-size: 40%; text-align: center", "Too bad... You'll do better next time");

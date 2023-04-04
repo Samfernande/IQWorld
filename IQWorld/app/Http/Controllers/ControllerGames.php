@@ -37,9 +37,9 @@ class ControllerGames extends Controller
         // Récupère les données traitées pour les statistiques
         $statistics = DB::table(DB::raw('(
             WITH RECURSIVE intervalles AS (
-                SELECT 0 AS debut, 250 AS fin
+                SELECT 0 AS debut, 1500 AS fin
                 UNION ALL
-                SELECT debut + 250, fin + 250
+                SELECT debut + 1500, fin + 1500
                 FROM intervalles
                 WHERE fin < 12000
             )

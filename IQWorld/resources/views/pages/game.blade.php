@@ -131,6 +131,7 @@
                     return [item[1], item[0]];
                 }),
                 type: 'line',
+                smooth: true,
                 lineStyle: {
                     color: '#fff'
                 },

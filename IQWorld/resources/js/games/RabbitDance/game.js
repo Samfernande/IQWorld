@@ -235,10 +235,10 @@ export class RabbitGame
     createInterface() {
         // Crée les éléments
         let minusButton = document.createElement("button");
-        minusButton.innerHTML = "-";
+        minusButton.innerHTML = "+";
         minusButton.classList = "buttonGame";
         let plusButton = document.createElement("button");
-        plusButton.innerHTML = "+";
+        plusButton.innerHTML = "-";
         plusButton.classList = "buttonGame";
         let number = document.createElement("p");
         number.textContent = "1";
@@ -250,12 +250,12 @@ export class RabbitGame
         // Ajoute les événements aux boutons
         minusButton.addEventListener("click", function() {
           if (parseInt(number.textContent) > 0) {
-            number.textContent = parseInt(number.textContent) - 1;
+            number.textContent = parseInt(number.textContent) + 1;
           }
         });
         plusButton.addEventListener("click", function() {
           if (parseInt(number.textContent) < 20) {
-            number.textContent = parseInt(number.textContent) + 1;
+            number.textContent = parseInt(number.textContent) - 1;
           }
         });
 
