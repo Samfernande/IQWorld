@@ -32,6 +32,13 @@ class ProfileController extends Controller
         ]);
     }
 
+    function searchProfile(Request $request)
+    {
+        $user = User::where('name', '=', $request->input('search'))->first();
+
+        return $user ? $this->profile($user->id) : view('errors/404')->with(['noProfile' => 1]);
+    }
+
     // Méthode qui récupère la moyenne d'une caractéristique pour chaque jeu
     public function getAverage($table, $column)
     {
@@ -80,7 +87,7 @@ class ProfileController extends Controller
 
         $myScore = $maxScores->where('user_id', $userId)->first();
 
-        if ($myScore) {
+        if ($myScore && $maxScores->count() > 1) {
             $myTotalPoints = $myScore->total_points;
             $lowerScores = $maxScores->where('total_points', '<', $myTotalPoints)->count();
             $percentage = ($lowerScores / ($maxScores->count() - 1)) * 100;
@@ -89,7 +96,7 @@ class ProfileController extends Controller
             $percentage = 0;
         }
 
-        return $percentage;
+        return round($percentage);
     }
 
     public function getGeneralPercentage($id)
@@ -101,10 +108,10 @@ class ProfileController extends Controller
 
         $myScore = $maxScores->where('user_id', $id)->first();
 
-        if ($myScore) {
+        if ($myScore && $maxScores->count() > 1) {
             $myTotalPoints = $myScore->total_points;
             $lowerScores = $maxScores->where('total_points', '<', $myTotalPoints)->count();
-            return ($lowerScores / ($maxScores->count() - 1)) * 100;
+            return round(($lowerScores / ($maxScores->count() - 1)) * 100);
 
         } else {
                 return 0;

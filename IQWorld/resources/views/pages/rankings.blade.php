@@ -4,7 +4,7 @@
 <div class='backgroundLight littlePadding1'>
   <h1 class='colorDark littleMargin1'>General Ranking</h1>
 
-  <form action="{{ url('search') }}" method="POST">
+  <form action="{{ route('searchProfile') }}" method="POST">
       @csrf
       <div class="search-container littleMargin1">
         <input type="text" name="search" class="search-input" placeholder="Search a player">

@@ -75,7 +75,7 @@
 
         <div class='containerAlign littleMargin1'>
         
-            @foreach ($games as $game)
+            @foreach ($latestGames as $game)
             <div class="card background{{$game['categoryGames']['name']}} littleMargin1">
 
                 <a href={{ route('gameInfo', ['id' => $game['id']]) }} class='smallText2 colorWhite '>

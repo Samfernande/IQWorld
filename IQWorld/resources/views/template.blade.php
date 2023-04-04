@@ -22,7 +22,7 @@
         <div class="navbar backgroundDark">
 
             <a href="{{ route('home') }}" class="backgroundBlue">IQWorld</a>
-            <a href="">@lang("text.games")</a>
+            <a href="{{ route('allGames') }}">@lang("text.games")</a>
             <a href="{{ route('rankings') }}">@lang("text.leaderboards")</a>
             
           <!-- Ajouter un espace entre les liens à gauche et à droite -->
@@ -56,7 +56,7 @@
         <div class="footer-container">
             <div class="footer-links">
                 <a href="{{ route('home') }}">IQWorld</a>
-                <a href="">@lang("text.games")</a>
+                <a href="{{ route('allGames') }}">@lang("text.games")</a>
                 <a href="{{ route('rankings') }}">@lang("text.leaderboards")</a>
                 @guest
                     <a href="{{ route('login') }}">@lang("text.login")</a>

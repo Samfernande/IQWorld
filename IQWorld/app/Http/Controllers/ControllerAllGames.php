@@ -3,20 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\games;
-use App\Models\posts;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 
-class ControllerHome extends Controller
+class ControllerAllGames extends Controller
 {
-    public function index()
+    public function allGames()
     {
-        // Récupère les 4 derniers jeux avec la table categoryGame
-        $latestGames = games::with('categoryGames')->latest()->take(4)->get();
-
-        // Récupère les 3 derniers postes avec la table users
-        $posts = posts::with('users')->latest()->take(3)->get();
-
         // Récupère tous les jeux
         $allGames = games::with('categoryGames')->get();
 
@@ -41,6 +33,17 @@ class ControllerHome extends Controller
 
         array_push($gameOfDay, $games);
 
-        return view('pages/home')->with('games', $games)->with('posts', $posts)->with('gameOfDay', $gameOfDay)->with('latestGames', $latestGames);
+        return view('pages/allGames')
+            ->with('games', $games)
+            ->with('gameOfDay', $gameOfDay)
+            ->with('logicGame', $this->getAllGamesByCategory(5))
+            ->with('concentrationGame', $this->getAllGamesByCategory(4))
+            ->with('memoryGame', $this->getAllGamesByCategory(3))
+            ->with('reflexGame', $this->getAllGamesByCategory(2));
+    }
+
+    public function getAllGamesByCategory($id)
+    {
+        return games::with('categoryGames')->where('category_id', '=', $id)->get();
     }
 }

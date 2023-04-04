@@ -280,7 +280,7 @@ img {
 }
 
 .tableRanking tr:hover {
-  background-color: #ddd;
+  background-color: #b6b6b6;
 }
 
 .search-container {
@@ -331,7 +331,7 @@ img {
   text-align: right;
   line-height: 30px;
   color: white;
-  border-radius: 0px;
+  border-radius: 10px;
 }
 
 .progress-circle {

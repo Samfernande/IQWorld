@@ -5,6 +5,7 @@ use App\Http\Controllers\ControllerHome;
 use App\Http\Controllers\ControllerGames;
 use App\Http\Controllers\ControllerRanking;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ControllerAllGames;
 use App\Http\Controllers\LanguageController;
 
 /*
@@ -30,13 +31,13 @@ Route::get('/profile/{id}', [ProfileController::class, 'profile'])->name('profil
 
 Route::post('/profile/{id}', [ProfileController::class, 'store'])->name('profile');
 
+Route::post('/profile', [ProfileController::class, 'searchProfile'])->name('searchProfile');
+
 Route::get('/rankings', [ControllerRanking::class, 'rankings'])->name('rankings');
 
 Route::get('/rankings/games/{id}', [ProfileController::class, 'rankingsGames'])->name('rankingsGames');
 
-
-
-
+Route::get('/allGames', [ControllerAllGames::class, 'allGames'])->name('allGames');
 
 // TRUCS CHIANTS 
 
