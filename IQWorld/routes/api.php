@@ -64,7 +64,12 @@ Route::get('/user/{id}/{game_id}', function ($id, $game_id) {
         $can_update = true;
     }
 
-    return $lastRankUp ? ['points' => $points, 'can_update' => $can_update, 'centile' => $centiles[$limitation]] : ['points' => 0, 'can_update' => $can_update, 'centile' => $centiles[$limitation]];
+    return $lastRankUp ? ['c54a061dfcc125cb160421b2680feaf6d65d938d756d887fe4d8d1d046eb626e' => $points, 
+                        'f542c4918a6de6ca67985802d28a5b4bac06b669f5f3a576c767c574d1bd3b8f' => $can_update, 
+                        'c90a766a1e6b469b8e99f3fe6663316a8d701fb883168fbed768be593a1665f6' => $centiles[$limitation]] : 
+                        ['c54a061dfcc125cb160421b2680feaf6d65d938d756d887fe4d8d1d046eb626e' => 0,
+                         'f542c4918a6de6ca67985802d28a5b4bac06b669f5f3a576c767c574d1bd3b8f' => $can_update,
+                          'c90a766a1e6b469b8e99f3fe6663316a8d701fb883168fbed768be593a1665f6' => $centiles[$limitation]];
 
 });
 
@@ -72,11 +77,11 @@ Route::post('/user/{id}/{game_id}', function ($id, $game_id) {
     
     $lastRankUp = User::findOrFail($id)->game()->where('games.id', $game_id)->where('rank_up', 1)->latest()->first();
 
-    $points = request('points');
-    $accuracy = request('accuracy');
-    $reaction_time = request('reaction_time');
-    $created_date = request('created_date');
-    $rank_up = request('rank_up');
+    $points = request('c54a061dfcc125cb160421b2680feaf6d65d938d756d887fe4d8d1d046eb626e');
+    $accuracy = request('ac991dd3c2d928da95b77afb954db61a3246be27b683f30d1232dcee625ae376');
+    $reaction_time = request('d54811bd86d428ebc653d0a69354c29a3403ffd993d28a4bbef54f66715771eb');
+    $created_date = request('a1f93bd5ca6444572f1e0692b419f5f843312172316c50ccb9c5d57b1a6933ab');
+    $rank_up = request('b5bd51ca3d2f78b2d868b401273a4d4988c95103fa7005fe004311484fb25510');
     $user = User::findOrFail($id);
 
     $user->game()->attach($game_id, ['points' => $points, 'accuracy' => $accuracy, 'reaction_time' => $reaction_time, 'created_at' => $created_date, 'rank_up' => $rank_up]);

@@ -68,11 +68,11 @@ function addPlayerData(updateRank) {
       url: '/api/user/' + idUser + "/" + idGame,
       type: 'POST',
       data: {
-        points: playerDataPoints,
-        accuracy: playerDataAccuracy,
-        reaction_time: playerDataReactionTime,
-        rank_up: updateRank,
-        created_date: getCurrentDateTime()
+        c54a061dfcc125cb160421b2680feaf6d65d938d756d887fe4d8d1d046eb626e: playerDataPoints,
+        ac991dd3c2d928da95b77afb954db61a3246be27b683f30d1232dcee625ae376: playerDataAccuracy,
+        d54811bd86d428ebc653d0a69354c29a3403ffd993d28a4bbef54f66715771eb: playerDataReactionTime,
+        b5bd51ca3d2f78b2d868b401273a4d4988c95103fa7005fe004311484fb25510: updateRank,
+        a1f93bd5ca6444572f1e0692b419f5f843312172316c50ccb9c5d57b1a6933ab: getCurrentDateTime()
       },
       success: function(data) {
           console.log('Données ajoutées avec succès!');
@@ -87,9 +87,9 @@ function getPlayerData() {
       url: '/api/user/' + idUser + "/" + idGame,
       type: 'GET',
       success: function(data) {
-          playerDataPoints = data['points'];
-          canUpdate = data['can_update'];
-          centile = data['centile'];
+          playerDataPoints = data['c54a061dfcc125cb160421b2680feaf6d65d938d756d887fe4d8d1d046eb626e'];
+          canUpdate = data['f542c4918a6de6ca67985802d28a5b4bac06b669f5f3a576c767c574d1bd3b8f'];
+          centile = data['c90a766a1e6b469b8e99f3fe6663316a8d701fb883168fbed768be593a1665f6'];
       },
   });
 }
